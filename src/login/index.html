@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head data-bs-theme="dark">
+  <title>Hello world! | Login</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="styles.scss" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <script src="./index.js"></script>
+</head>
+
+<body id="root" data-bs-theme="dark">
+  <nav class="navbar navbar-light bg-body-secondary border-bottom border-primary-subtle border-2">
+    <div class="container">
+      <a href="/index.html">
+        <h1><span class="badge bg-primary"><span class="badge bg-warning">Dude!</span> AjanSeuranta</span></h1>
+      </a>
+    </div>
+  </nav>
+
+  <div class="container" align="center">
+    <form class="h-50 d-inline-block">
+      <div class="form-outline mb-4 mt-5">
+        <label class="form-label" for="username">Email address</label>
+        <input type="email" id="username" class="form-control bg-body-secondary" placeholder="email@domain.tld" />
+      </div>
+
+      <div class="form-outline mb-4">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" class="form-control bg-body-secondary" placeholder="Password" />
+      </div>
+
+      <div class="mb-4 d-flex">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="remember" checked />
+          <label class="form-check-label" for="remember"> Remember me </label>
+        </div>
+      </div>
+
+      <div id="alert"></div>
+
+      <div class="row mb-4">
+        <button type="button" class="btn btn-primary btn-block mb-4" id="login">Sign in <i class="fa fa-arrow-right"
+            aria-hidden="true"></i> </button>
+
+        <div class="alert alert-danger invisible" role="alert">
+          <p class="alert-heading">Invalid username or passworld</p>
+        </div>
+
+        <!--
+        <a href="#!" onclick="alert('To be implemented later no promis')">Forgor password? 💀</a>
+        -->
+      </div>
+  </div>
+  </form>
+  </div>
+</body>
+
+</html>

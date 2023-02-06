@@ -1,0 +1,13 @@
+/* import the necessary Bootstrap files */
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+
+/*
+$primary: rgb(255, 188, 26);
+$theme-colors: (
+  primary: $primary
+);
+*/
+
+/* finally, import Bootstrap */
+@import "~bootstrap/scss/bootstrap";

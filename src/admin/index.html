@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Hello world!</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/fontawesome.min.css" />
+	<link rel="stylesheet" href="styles.scss" />
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+	<script src="./index.js"></script>
+</head>
+
+<body data-bs-theme="dark">
+	<!-- Main Div -->
+	<nav class="navbar navbar-light bg-body-secondary border-bottom border-primary-subtle border-2">
+		<div class="container">
+			<!-- Logo -->
+			<div>
+				<a href="/index.html">
+					<h1><span class="badge bg-primary"><span class="badge bg-warning">Dude!</span> AjanSeuranta</span>
+					</h1>
+				</a>
+			</div>
+			<!-- Buttons for big screens -->
+			<div class="d-none d-lg-block">
+				<a name="" class="btn mx-1 btn-primary" href="/users/index.html" role="button">Users</a>
+				<a name="" class="btn mx-1 btn-primary" href="/cards/index.html" role="button">Cards</a>
+				<a name="" class="btn mx-1 btn-primary" href="/admin/index.html" role="button">Admin</a>
+				<a name="" id="logout" class="btn mx-1 btn-secondary" href="#" role="button">Logout</a>
+			</div>
+			<!-- DropDown for small screens -->
+			<div class="d-lg-none">
+				<div class="btn-group">
+					<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+						id="triggerId" aria-haspopup="true" aria-expanded="false">
+						<h2 class="fa fa-bars"></h2>
+					</button>
+					<div class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end" aria-labelledby="triggerId">
+						<a name="" class="dropdown-item" href="/users/index.html" role="button">Users</a>
+						<a name="" class="dropdown-item" href="/cards/index.html" role="button">Cards</a>
+						<a name="" class="dropdown-item" href="/admin/index.html" role="button">Admin</a>
+						<div class="dropdown-divider"></div>
+						<a name="" id="logout" class="dropdown-item" href="#" role="button">Logout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Main Container -->
+	<div class="container flex mt-5" align="center">
+		<form class="h-50 d-inline-block">
+			<div class="h3">Change password</div>
+			<div class="form-outline mb-3">
+				<label class="form-label" for="password">Current Password</label>
+				<input type="password" id="password" class="form-control bg-body-secondary" placeholder="Current password" />
+			</div>
+
+			<div class="form-outline mb-3">
+				<label class="form-label" for="password">New Password</label>
+				<input type="password" id="password" class="form-control bg-body-secondary" placeholder="New password" />
+			</div>
+
+			<div class="form-outline mb-4">
+				<label class="form-label" for="password">New Password Again</label>
+				<input type="password" id="password" class="form-control bg-body-secondary" placeholder="New password Again" />
+			</div>
+
+			<div id="alert"></div>
+
+			<div class="row mb-4">
+				<button type="button" class="btn btn-primary btn-block mb-4" id="login">Change Password <i
+						class="fa fa-arrow-right" aria-hidden="true"></i></button>
+
+				<div class="alert alert-danger invisible" role="alert">
+					<p class="alert-heading">Invalid username or passworld</p>
+				</div>
+
+				<!--
+        <a href="#!" onclick="alert('To be implemented later no promis')">Forgor password? 💀</a>
+        -->
+			</div>
+
+
+	</div>
+</body>
+
+</html>
