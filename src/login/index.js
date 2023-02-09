@@ -1,7 +1,7 @@
 import * as bootstrap from 'bootstrap';
-
-const BACKEND_URL = "http://192.168.192.12:8081";
-console.log('Backend URL: ', BACKEND_URL);
+import {alert, success, warning, danger} from "/js/message"
+import {makeRequest} from "/js/utils"
+import * as config from "/config"
 
 
 function invalidDataShowError(errorMessage) {
@@ -20,8 +20,7 @@ function login() {
 
     var http = new XMLHttpRequest();
 
-    var url = BACKEND_URL + "/login"
-    http.open('POST', url, true)
+    http.open('POST', config.LOGIN_URL, true)
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     http.send(JSON.stringify({
@@ -41,18 +40,20 @@ function login() {
             window.location.replace('/index.html');
         } else if (http.status == 401) {
             inputPass.value = "";
-            invalidDataShowError("Invalid username or passworld");
+            invalidDataShowError("Invalid username or passworld.");
         } else {
             inputPass.value = "";
-            invalidDataShowError("server error, contact administrator");
+            invalidDataShowError("Server error, contact administrator.");
         }
     }
 
     http.onerror = function () {
         inputPass.value = "";
-        invalidDataShowError("server error, contact administrator");
+        invalidDataShowError("Server error, contact administrator.");
     }
 }
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("BootStrap verion:", bootstrap.Tooltip.VERSION);

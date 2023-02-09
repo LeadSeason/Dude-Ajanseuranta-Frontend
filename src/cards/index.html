@@ -3,50 +3,13 @@
 
 <head>
 	<title>Hello world!</title>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" href="/fontawesome.min.css" />
-	<link rel="stylesheet" href="styles.scss" />
-	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+	<include src="./src/common/head.html"></include>
 </head>
 
 <body data-bs-theme="dark">
-	<!-- Main Div -->
-	<nav class="navbar navbar-light bg-body-secondary border-bottom border-primary-subtle border-2">
-		<div class="container">
-			<!-- Logo -->
-			<div>
-				<a href="/index.html">
-					<h1><span class="badge bg-primary"><span class="badge bg-warning">Dude!</span> AjanSeuranta</span>
-					</h1>
-				</a>
-			</div>
-			<!-- Buttons for big screens -->
-			<div class="d-none d-lg-block">
-				<a name="" class="btn mx-1 btn-primary" href="/users/index.html" role="button">Users</a>
-				<a name="" class="btn mx-1 btn-primary" href="/cards/index.html" role="button">Cards</a>
-				<a name="" class="btn mx-1 btn-primary" href="/admin/index.html" role="button">Admin</a>
-				<a name="" id="logout" class="btn mx-1 btn-secondary" href="#" role="button">Logout</a>
-			</div>
-			<!-- DropDown for small screens -->
-			<div class="d-lg-none">
-				<div class="btn-group">
-					<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-						id="triggerId" aria-haspopup="true" aria-expanded="false">
-						<h2 class="fa fa-bars"></h2>
-					</button>
-					<div class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end" aria-labelledby="triggerId">
-						<a name="" class="dropdown-item" href="/users/index.html" role="button">Users</a>
-						<a name="" class="dropdown-item" href="/cards/index.html" role="button">Cards</a>
-						<a name="" class="dropdown-item" href="/admin/index.html" role="button">Admin</a>
-						<div class="dropdown-divider"></div>
-						<a name="" id="logout" class="dropdown-item" href="#" role="button">Logout</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</nav>
+	<!-- Navbar -->
+	<include src="./src/common/navbar.html"></include>
+
 
 	<!-- Main Container -->
 	<div class="container flex mt-5">
@@ -57,7 +20,7 @@
 			<button type="button" class="btn btn-outline-danger mx-2" data-bs-toggle="button"
 				id="readCardButtonCancel">Cancel</button>
 			<div class="d-grid gap-2">
-				<button type="button" name="" id="refresh" class="btn btn-primary" onclick="loadCards()"><i
+				<button type="button" name="" id="refresh" class="btn btn-primary"><i
 						class="fa fa-refresh"></i></button>
 			</div>
 		</div>
@@ -65,9 +28,6 @@
 			<p class="mt-1 " id="readCardTimer"></p>
 		</div>
 		<div class="h4 text-center row justify-content-center border-2 border-secondary">
-			<div class="col-1 border-start border-top border-bottom">
-				ID
-			</div>
 			<div class="col-3 border-start border-top border-bottom">
 				Card Name
 			</div>
@@ -84,8 +44,6 @@
 		</div>
 	</div>
 	<a href="/login/index.html"></a>
-
-	<script src="./index.js"></script>
 </body>
 
 </html>
