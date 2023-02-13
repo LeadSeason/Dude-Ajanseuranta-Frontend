@@ -6,7 +6,7 @@
 	<include src="./src/common/head.html"></include>
 </head>
 
-<body data-bs-theme="dark">
+<body id="root" data-bs-theme="dark">
 	<!-- Navbar -->
 	<include src="./src/common/navbar.html"></include>
 
@@ -17,18 +17,18 @@
 			<div class="h3">Change password</div>
 
 			<div class="form-outline mb-3">
-				<label class="form-label" for="password">Current Password</label>
-				<input type="password" id="password" class="form-control bg-body-secondary" placeholder="Current password" />
+				<label class="form-label" for="pass1">Current Password</label>
+				<input type="password" id="pass1" class="form-control bg-body-secondary" placeholder="Current password" />
 			</div>
 
 			<div class="form-outline mb-3">
-				<label class="form-label" for="password">New Password</label>
-				<input type="password" id="password" class="form-control bg-body-secondary" placeholder="New password" />
+				<label class="form-label" for="pass2">New Password</label>
+				<input type="password" id="pass2" class="form-control bg-body-secondary" placeholder="New password" />
 			</div>
 
 			<div class="form-outline mb-4">
-				<label class="form-label" for="password">New Password Again</label>
-				<input type="password" id="password" class="form-control bg-body-secondary" placeholder="New password Again" />
+				<label class="form-label" for="pass3">New Password Again</label>
+				<input type="password" id="pass3" class="form-control bg-body-secondary" placeholder="New password Again" />
 			</div>
 
 			<div id="alert"></div>

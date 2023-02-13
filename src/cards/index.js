@@ -1,7 +1,7 @@
 import * as bootstrap from 'bootstrap';
-import * as token from "/js/token"
-import {alert, success, warning, danger} from "/js/message"
-import {makeRequest} from "/js/utils"
+import { logout } from "/js/logout"
+import { alert, success, warning, danger } from "/js/message"
+import { makeRequest } from "/js/utils"
 import * as config from "/config"
 
 let CardReadingCanceled = false;
@@ -19,20 +19,14 @@ async function setReadingMode() {
     }
     CardReadingCanceled = false;
 
-	var http = new XMLHttpRequest();
+    var data = await makeRequest('POST', config.CARD.SET_READING_MODE_URL);
 
-	http.open('POST', config.CARD.SET_READING_MODE_URL);
-	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	http.send(JSON.stringify({
-		"token": token.token,
-	}));
-
-	http.onload = cardReadingModeTimer;
-
-    http.onerror = function () {
+    if (data.status == 200) {
+        cardReadingModeTimer();
+    } else {
         console.log("Unable to set reading mode");
         new danger("Warning", "Unable to set reading mode").show();
-	}
+    }
 }
 
 async function cardReadingModeTimer() {
@@ -69,135 +63,114 @@ async function displayTime(seconds) {
     timer.innerHTML = "Reading card for " + minutes + ":" + seconds;
 }
 
-function cancelReadingMode() {
-	var http = new XMLHttpRequest();
+async function cancelReadingMode() {
+    var data = await makeRequest('POST', config.CARD.CANCEL_READING_MODE_URL);
 
-	http.open('POST', config.CARD.CANCEL_READING_MODE_URL);
-	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	http.send(JSON.stringify({
-		"token": token.token,
-	}));
-
-	http.onload = function () {
+    if (data.status == 200) {
         CardReadingCanceled = true;
         doneCanceling = false;
         var timer = document.getElementById("readCardTimer");
         timer.innerHTML = ""
         countTime = 0;
-    }
-
-    http.onerror = function () {
+    } else {
         console.log("Unable to stop Reading mode");
         new danger("Warning", "Unable to stop Reading mode").show();
-	}
+    }
 }
 
-function loadCards() {
-    var http = new XMLHttpRequest();
-    http.open('POST', config.CARD.GET_URL);
-    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    http.send(JSON.stringify({
-        "token": token.token
-    }));
-    http.onload = function () {
-        
-        if (http.status == 200) {
-            var cardList = document.getElementById("cardList")
-            var r = JSON.parse(http.responseText)
-            cardList.innerHTML = ""; 
-            var border = ""
+async function loadCards() {
+    var data = await makeRequest('GET', config.CARD.GET_URL);
+    console.log(data)
+    if (data.status == 200) {
+        var cardList = document.getElementById("cardList")
+        var r = JSON.parse(data.body)
+        cardList.innerHTML = "";
+        var border = ""
 
-			if (r == null) {
-				return
-			}
+        if (r == null) {
+            return
+        }
 
-            for(let i = 0; i < r.length; i++) {
-                let obj = r[i];
-                if (i == r.length - 1 ) {
-                    var border = "border-bottom"
-                }
+        for (let i = 0; i < r.length; i++) {
+            let obj = r[i];
+            if (i == r.length - 1) {
+                var border = "border-bottom"
+            }
 
             cardList.innerHTML += `
- 		<div class="row text-light fs-5 justify-content-center border-2 border-secondary">
-			<div class="col-3 border-start border-top `+ border +`">
-                <input id="newCardName`+ i +`" class="form-control-plaintext border-none text-light bg-body" placeholder="`+ obj.cardname +`" />
-			</div>
-			<div class="col-1 border-top `+ border +`">
-				<button id="`+ obj.cardid +`" class="renameCardClass btn btn-link"><i class="fa fa-arrow-right"></i></button>
-			</div>
-			<div class="col-4 border-start border-top `+ border +`">
-                `+ obj.assingedto +`
-			</div>
-			<div class="col-1 border-start text-center border-top border-end `+ border + ` ">
-				<button id=`+ obj.cardid +` class="removeCardClass btn btn-link text-danger"><i class="fa fa-trash-can"></i></button>
-			</div>
-		</div>
-            `
-            }
+    <div class="row text-light fs-5 justify-content-center border-2 border-secondary">
+        <div class="col-3 border-start border-top `+ border + `">
+            <input id="newCardName`+ i + `" class="form-control-plaintext border-none text-light bg-body" placeholder="` + obj.cardname + `" />
+        </div>
+        <div class="col-1 border-top `+ border + `">
+            <button id="`+ obj.cardid + `" class="renameCardClass btn btn-link"><i class="fa fa-arrow-right"></i></button>
+        </div>
+        <div class="col-4 border-start border-top `+ border + `">
+            `+ obj.assingedto + `
+        </div>
+        <div class="col-1 border-start text-center border-top border-end `+ border + ` ">
+            <button id=`+ obj.cardid + ` class="removeCardClass btn btn-link text-danger"><i class="fa fa-trash-can"></i></button>
+        </div>
+    </div>
+        `
+        }
 
-            var removeCards = document.getElementsByClassName("removeCardClass")
-            for (let i = 0; i < removeCards.length; i++) {
-                removeCards[i].addEventListener('click', (self) => {
-					let id = removeCards[i].id;
-					console.log("removing id:", id);
-
-					var http = new XMLHttpRequest();
-
-					// send remove request
-					http.open('POST', config.CARD.REMOVE_URL);
-					http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-					http.send(JSON.stringify({
-						"token": token.token,
-						"id": Number(id)
-					}));
-					http.onload = function () {
-						loadCards();
-					}
-					http.onerror = function () {
-						console.log("unable to remove user:", id)
-					}
-                });
-            }
-            var newCardNames = document.getElementsByClassName("renameCardClass")
-            for (let i = 0; i < removeCards.length; i++) {
-                newCardNames[i].addEventListener('click', (self) => {
-                    let newname = document.getElementById("newCardName" + i).value;
-					let id = newCardNames[i].id;
-                    var http = new XMLHttpRequest();
-
-                    http.open('POST', config.CARD.RENAME_URL);
-                    http.setRequestHeader("token", token.token);
-                    http.setRequestHeader("cardid", id);
-                    http.setRequestHeader("cardname", newname);
-
-                    http.send();
-                    http.onload = function () {
-                        if (http.status == 200) {
-                            loadCards();
-                        } else {
-                            new danger("Fail", "Unable to rename user: " + id).show()
-                            console.log("Unable to rename card: ", id)
-                        }
-                    }
-                    http.onerror = function () {
-                        new danger("Fail", "Unable to rename user: " + id).show()
-                        console.log("Unable to rename card: ", id)
-                    }
-                    http.onabort = function () {
-                        new danger("Fail", "Unable to rename user: " + id).show()
-                        console.log("Unable to rename card: ", id)
-                    }
-                });
-            }
+        var removeCards = document.getElementsByClassName("removeCardClass")
+        for (let i = 0; i < removeCards.length; i++) {
+            let event = removeCards[i];
+            event.addEventListener('click', deleteCard);
+            event.CardID = event.id;
+        }
+        var newCardNames = document.getElementsByClassName("renameCardClass")
+        for (let i = 0; i < removeCards.length; i++) {
+            var event = newCardNames[i];
+            let id = newCardNames[i].id;
+            event.addEventListener('click', renameCard);
+            event.CardIndex = i;
+            event.CardID = id;
         }
     }
 }
 
+async function deleteCard(evn) {
+    let id = evn.currentTarget.CardID
+
+    var data = await makeRequest('POST', config.CARD.REMOVE_URL, JSON.stringify({
+        "id": Number(id)
+    }));
+
+    if (data.status == 200) {
+        new success("Success", "Successfully Deleted Card: " + id + ".").show()
+        loadCards();
+    } else {
+        new danger("Fail", "Unable to rename user: " + id).show()
+        console.log("unable to remove user:", id)
+    }
+}
+
+async function renameCard(evn) {
+    let index = evn.currentTarget.CardIndex
+    let newname = document.getElementById("newCardName" + index).value;
+    let id = evn.currentTarget.CardID
+
+    var data = await makeRequest('POST', config.CARD.RENAME_URL, JSON.stringify({
+        "cardid": id,
+        "cardname": newname
+    }));
+
+    if (data.status == 200) {
+        new success("Success", "Successfully changed cardname to " + newname + ".").show()
+        loadCards();
+    } else {
+        new danger("Fail", "Unable to rename user: " + id).show()
+        console.log("Unable to rename card: ", id)
+    }
+}
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("logout").addEventListener("click", logout)
-
-    loadCards(token);
+    loadCards();
 
     readCardButton = document.getElementById("readCardButton");
     readCardButton.addEventListener("click", setReadingMode);

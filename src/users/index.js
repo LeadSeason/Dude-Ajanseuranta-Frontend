@@ -1,54 +1,57 @@
 import * as bootstrap from 'bootstrap';
-import * as token from "/js/token"
-import {alert, success, warning, danger} from "/js/message"
-import {makeRequest} from "/js/utils"
+import { logout } from "/js/logout"
+import { alert, success, warning, danger } from "/js/message"
+import { makeRequest } from "/js/utils"
 import * as config from "/config"
 
-function addUser() {
+/**
+ * AddUser callback Adds user with name given from usernameInput field
+ */
+async function addUser() {
 	var inputfield = document.getElementById("usernameInput")
 	var username = inputfield.value
-	var http = new XMLHttpRequest();
-	http.open('POST', config.USER.ADD_URL);
-	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	http.send(JSON.stringify({
-		"token": token.token,
+
+    var data = await makeRequest('POST', config.USER.ADD_URL, JSON.stringify({
 		"username": username,
-		"cardname": ""
-	}));
-	http.onload = function () {
+    }));
+
+	if (data.status == 200) {
+        new success("Success", "User "+ username +"added").show()
 		inputfield.value = "";
 		getUsers();
+	} else {
+        new danger("Warning", "Failed to add user").show()
 	}
 }
 
-
-
+/**
+ * Generates User list and adds it to the id="Userlist" div
+ * run at page load
+ */
 async function getUsers() {
-	// request all users from database
-	var http = new XMLHttpRequest();
+	// Request list of users
+    var users = await makeRequest('GET', config.USER.GET_URL);
 
-	http.open('POST', config.USER.GET_URL);
-	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-	// request with token
-	http.send(JSON.stringify({
-		"token": token.token
-	}));
-
-	http.onload = async function () {
-		if (http.status != 200) {
-			return
-		}
-
-		var response = JSON.parse(http.responseText)
-
-		var cards = await getCards();
-
-		// change card dropdown events
-		await renderUserData(response, cards)
-		AddClickEventForDeleteButton()
-		addClickEventForChangeCardDropdown(cards)
+	if (users.status != 200) {
+		console.log("Failed to get users");
+        new danger("Warning", "Failed to get users").show()
+		return
 	}
+
+	var cards = await makeRequest('GET', config.CARD.GET_URL);
+
+	if (cards.status != 200) {
+		console.log("Failed to get cards");
+        new danger("Warning", "Failed to get cards").show()
+		return
+	}
+
+	users = JSON.parse(users.body);
+	cards = JSON.parse(cards.body);
+
+	await renderUserData(users, cards)
+	AddClickEventForDeleteButton()
+	addClickEventForChangeCardDropdown(cards)
 }
 
 async function renderUserData(r, cards) {
@@ -71,7 +74,7 @@ async function renderUserData(r, cards) {
 		let obj = r[i];
 
 		var useractive = "";
-		if  (obj.active) {
+		if  (obj.present) {
 			useractive = "bg-success"
 		}
 
@@ -94,7 +97,7 @@ async function renderUserData(r, cards) {
 		UserList.innerHTML += `
 <div class="row text-light fs-5 justify-content-center border-2 border-secondary">
 	<div class="col-3 border-start border-top `+ useractive + " " + border +`">
-		`+ obj.name + `
+		`+ obj.name +`
 	</div>
 	<div class="col-4 border-start border-top `+ useractive + " " + border +`">
 		<div class="btn-group">
@@ -115,14 +118,6 @@ async function renderUserData(r, cards) {
 	}
 }
 
-
-async function getCards() {
-	var data = await makeRequest('POST', config.CARD.GET_URL, JSON.stringify({
-		"token": token.token
-	}));
-	return JSON.parse(data);
-}
-
 async function getCardListDropdown(cards, user) {
 	var cardsDropdown = "";
 	for (let i2 = 0; i2 < cards.length; i2++) {
@@ -139,7 +134,7 @@ async function getCardListDropdown(cards, user) {
 
 		// add cards to drop down
 		// set username into id to be used late to change cards
-		cardsDropdown += `<a id="`+ user.name+`" class="`+ classname +` dropdown-item `+ active +`" href="#">`+ card.cardname +`</a>`
+		cardsDropdown += `<a id="`+ user.id+`" class="`+ classname +` dropdown-item `+ active +`" href="#">`+ card.cardname +`</a>`
 	}
 	return cardsDropdown
 }
@@ -156,69 +151,55 @@ async function addClickEventForChangeCardDropdown(cards) {
 }
 
 async function changeCard(evn) {
-	// get cardname from text
+
 	let namecard = evn.explicitOriginalTarget.text;
-	// get id from 
-	let name = evn.explicitOriginalTarget.id;
+	let userid = evn.explicitOriginalTarget.id;
 
-	console.log("changing card Id: " + name + " cardname: " + namecard)
+	console.log("changing card Id: " + userid + " cardname: " + namecard)
 
-	var http = new XMLHttpRequest();
-
-	http.open('POST', config.USER.UPDATE_URL);
-	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	http.send(JSON.stringify({
-		"token": token.token,
-		"username": name,
+	var data = await makeRequest('POST', config.USER.UPDATE_CARD_URL, JSON.stringify({
+		"userid": Number(userid),
 		"cardname": namecard
-	}));
+	}))
 
-	http.onload = function () {
-		// Reload user data
+	if (data.status == 200) {
+        new success("Success", "Updated user card").show()
 		getUsers();
-	}
-	http.onerror = function () {
-		warning("Fatal", "unable to remove user: " + id)
-		console.log("unable to remove user:", id)
+	} else {
+        new danger("Warning", "Failed to update card").show()
 	}
 }
 
 async function AddClickEventForDeleteButton() {
 	// generate event triggers for removeCardclassed buttons
 	var removeCards = document.getElementsByClassName("removeCardClass")
-	console.log(removeCards)
 	for (let i = 0; i < removeCards.length; i++) {
 		// when remove card is clicked run code
-		removeCards[i].addEventListener('click', removeUser);
+		var event = removeCards[i];
+		event.addEventListener('click', removeUser);
+		event.UserID = removeCards[i].id;
 	}
 }
 
-async function removeUser(evn) {
-	console.log(evn)
-	let id = removeCards[i].id;
-	console.log("removing id:", id);
-
-	var http = new XMLHttpRequest();
+async function removeUser(evt) {
+	var id = evt.currentTarget.id
 
 	// send remove request
-	http.open('POST', config.USER.REMOVE_URL);
-	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	http.send(JSON.stringify({
-		"token": token.token,
+	var data = await makeRequest('POST', config.USER.REMOVE_URL, JSON.stringify({
 		"id": Number(id)
 	}));
-	http.onload = function () {
-		success("Success", "Removed user: " + id)
+
+	if (data.status == 200) {
 		getUsers();
-	}
-	http.onerror = function () {
+		new success("Success", "Removed user: " + id).show()
+	} else {
 		console.log("unable to remove user:", id)
+		new danger("Fatal", "unable to remove user:" + id).show()
 		warning("failure")
 	}
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
-	document.getElementById("logout").addEventListener("click", token.logout)
 	document.getElementById("adduserbutton").addEventListener("click", addUser);
 
 	getUsers()

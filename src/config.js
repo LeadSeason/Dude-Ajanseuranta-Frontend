@@ -1,11 +1,11 @@
-export const BACKEND_URL = "http://192.168.192.12:8082";
+export const BACKEND_URL = "http://192.168.192.12:8082/api/v1";
 // export const BACKEND_URL = "http://localhost:8080";
 
 export class USER {
   static GET_URL = BACKEND_URL + "/user/get";
 	static ADD_URL = BACKEND_URL + "/user/add";
 	static REMOVE_URL = BACKEND_URL + "/user/remove";
-	static UPDATE_URL = BACKEND_URL + "/user/update";
+	static UPDATE_CARD_URL = BACKEND_URL + "/user/updatecard";
 }
 
 export class CARD {

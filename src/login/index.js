@@ -12,52 +12,34 @@ function invalidDataShowError(errorMessage) {
         `
 }
 
-function login() {
-    console.log("Login in ... ")
+async function login() {
     let inputUser = document.getElementById("username");
     let inputPass = document.getElementById("password");
     let inputRemb = document.getElementById("remember");
 
-    var http = new XMLHttpRequest();
-
-    http.open('POST', config.LOGIN_URL, true)
-    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-    http.send(JSON.stringify({
+    var data = await makeRequest('POST', config.LOGIN_URL, JSON.stringify({
         "username": inputUser.value,
         "password": inputPass.value,
         "remember": inputRemb.checked
     }));
 
-    http.onload = function () {
-
-        console.log(http.status);
-        console.log(http.status == 200);
-        console.log(http.responseText);
-        if (http.status == 200) {
-            var r = JSON.parse(http.responseText)
-            localStorage.setItem("token", r.token);
-            window.location.replace('/index.html');
-        } else if (http.status == 401) {
-            inputPass.value = "";
-            invalidDataShowError("Invalid username or passworld.");
-        } else {
-            inputPass.value = "";
-            invalidDataShowError("Server error, contact administrator.");
-        }
-    }
-
-    http.onerror = function () {
+    if (data.status == 200) {
+        window.location.replace('/index.html');
+    } else if (data.status == 401) {
+        // 401 Invalid password
+        inputPass.value = "";
+        invalidDataShowError("Invalid username or passworld.");
+    } else {
+        // any other show error
         inputPass.value = "";
         invalidDataShowError("Server error, contact administrator.");
     }
 }
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("BootStrap verion:", bootstrap.Tooltip.VERSION);
     document.getElementById("login").addEventListener("click", login)
+    // when enter is pressed call login() function.
     var input = document.getElementById("root");
 
     input.addEventListener("keypress", function (event) {
