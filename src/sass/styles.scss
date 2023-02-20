@@ -11,3 +11,11 @@ $theme-colors: (
 
 /* finally, import Bootstrap */
 @import "~bootstrap/scss/bootstrap";
+
+* {
+  font-family: 'JetBrains Mono';
+}  
+
+.vh-75 {
+  height: 75vh;
+}

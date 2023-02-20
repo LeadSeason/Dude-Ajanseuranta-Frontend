@@ -1,7 +1,7 @@
 import * as bootstrap from 'bootstrap';
 import { logout } from "/js/logout"
 import { alert, success, warning, danger } from "/js/message"
-import { makeRequest } from "/js/utils"
+import { makeRequest, alertConfirm } from "/js/utils"
 import * as config from "/config"
 
 /**
@@ -30,7 +30,7 @@ async function addUser() {
  */
 async function getUsers() {
 	// Request list of users
-    var users = await makeRequest('GET', config.USER.GET_URL);
+    var users = await makeRequest('GET', config.USER.GET_ALL_URL);
 
 	if (users.status != 200) {
 		console.log("Failed to get users");
@@ -54,7 +54,25 @@ async function getUsers() {
 	addClickEventForChangeCardDropdown(cards)
 }
 
-async function renderUserData(r, cards) {
+
+/**
+ * Crates user list when page is loaded
+ * and when user list needs to be updated 
+ * also fills in dropdown info with card list data
+ * 
+ * @TODO never
+ * This is overly complicatedly done code could be improved by using selection
+ * and options, then just lisening to change event, Im not going to change this
+ * at this time as it currently works but is terrebly implemented. 👍
+ * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
+ * 
+ * 
+ * @param {JSON} users List of users
+ * @param {JSON} cards List of cards
+ * 
+ * @returns Return if error occur 
+ */
+async function renderUserData(users, cards) {
 	// request done parsing data		
 	var UserList = document.getElementById("UserList")
 
@@ -63,15 +81,15 @@ async function renderUserData(r, cards) {
 	var border = ""
 
 	// if null is given exit
-	if (r == null) {
+	if (users == null) {
 		return
 	}
 	
 	// get cards json
 
 	// render website data
-	for (let i = 0; i < r.length; i++) {
-		let obj = r[i];
+	for (let i = 0; i < users.length; i++) {
+		let obj = users[i];
 
 		var useractive = "";
 		if  (obj.present) {
@@ -79,7 +97,7 @@ async function renderUserData(r, cards) {
 		}
 
 		// when last render bottom border 
-		if (i == r.length - 1) {
+		if (i == users.length - 1) {
 			var border = "border-bottom"
 		}
 
@@ -90,16 +108,16 @@ async function renderUserData(r, cards) {
 		// add dropdown data
 		var cardsDropdown = "";
 		if (cards) {
-			cardsDropdown = await getCardListDropdown(cards, obj);
+			cardsDropdown = await getCardListDropdown(cards, obj, users);
 		}
 		
 		// generate main card list
 		UserList.innerHTML += `
-<div class="row text-light fs-5 justify-content-center border-2 border-secondary">
-	<div class="col-3 border-start border-top `+ useractive + " " + border +`">
-		`+ obj.name +`
+<div class="row text-light fs-5 justify-content-lg-center border-2 border-secondary">
+	<div class="col-lg-3 col border-start border-top `+ useractive + " " + border +`">
+		<a class="link-light" href="/user/index.html?user=`+ obj.id +`">`+ obj.name +`</a>
 	</div>
-	<div class="col-4 border-start border-top `+ useractive + " " + border +`">
+	<div class="col-lg-4 col border-start border-top `+ useractive + " " + border +`">
 		<div class="btn-group">
 			<button class="btn btn-dark dropdown-toggle `+ useractive +`" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">
@@ -118,7 +136,14 @@ async function renderUserData(r, cards) {
 	}
 }
 
-async function getCardListDropdown(cards, user) {
+/**
+ * Generates Card dropdown data
+ * Sets active if card is used by user
+ * @param {JSON} cards 
+ * @param {JSON} user 
+ * @returns 
+ */
+async function getCardListDropdown(cards, user, users) {
 	var cardsDropdown = "";
 	for (let i2 = 0; i2 < cards.length; i2++) {
 		var active = "";
@@ -127,9 +152,16 @@ async function getCardListDropdown(cards, user) {
 		// classname to be used later for change card functionaity
 		var classname = "ChangecardDropdown-" + cards[i2].cardname;
 
+		for (let index = 0; index < users.length; index++) {
+			const element = users[index];
+			if (element.cardname == card.cardname) {
+				active = "bg-danger-subtle"
+			}
+		}
+
 		// show what card is active if user and card same
 		if (card.cardname == user.cardname) {
-			active = "active"
+			active = "bg-success"
 		}
 
 		// add cards to drop down
@@ -139,24 +171,57 @@ async function getCardListDropdown(cards, user) {
 	return cardsDropdown
 }
 
+/**
+ * Adds ClockEvents to card dropdowns
+ * Clicking a card will call the changeCard function 
+ * @param {JSON} cards 
+ */
 async function addClickEventForChangeCardDropdown(cards) {
+	// Make list of active cards Used by changeCard to confirm card change
+	var activeCards = [];
+	for (let i = 0; i < cards.length; i++) {
+		var card = cards[i];
+		if (card.assingedto != "") {
+			activeCards.push(card);
+		}
+	}
+
 	for (let i = 0; i < cards.length; i++) {
 		var classname = "ChangecardDropdown-" + cards[i].cardname;
 		var changecard = document.getElementsByClassName(classname)
 		for (let i = 0; i < changecard.length; i++) {
 			// when cad is pressed change card
-			changecard[i].addEventListener('click', changeCard)
+			var card = changecard[i]
+			card.addEventListener('click', changeCard);
+			card.ActiveCards = activeCards;
 		}
 	}
 }
 
+/**
+ * Change card to Clicked card; 
+ * @param {EventTarget} evn event must contain ActiveCards
+ */
 async function changeCard(evn) {
-
+	let activeCards = evn.currentTarget.ActiveCards;
 	let namecard = evn.explicitOriginalTarget.text;
 	let userid = evn.explicitOriginalTarget.id;
 
-	console.log("changing card Id: " + userid + " cardname: " + namecard)
+	console.log("changing card Id: " + userid + " cardname: " + namecard);
 
+	// Check if card is used by some one
+	for (let i = 0; i < activeCards.length; i++) {
+		const aCard = activeCards[i];
+		if (aCard.cardname == namecard)  {
+			// if used ask user to confirm
+			if (!alertConfirm("Card In use by " + aCard.assingedto)) {
+				// cancel Exit function
+				return
+			}
+		}
+	}
+
+	// Make request to change card
 	var data = await makeRequest('POST', config.USER.UPDATE_CARD_URL, JSON.stringify({
 		"userid": Number(userid),
 		"cardname": namecard
@@ -201,6 +266,8 @@ async function removeUser(evt) {
 
 document.addEventListener("DOMContentLoaded", async function () {
 	document.getElementById("adduserbutton").addEventListener("click", addUser);
+    refresh = document.getElementById("refresh");
+    refresh.addEventListener("click", getUsers);
 
 	getUsers()
 });

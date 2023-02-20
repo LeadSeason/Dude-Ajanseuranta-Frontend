@@ -23,7 +23,6 @@ export function makeRequest(method, url, data = null) {
         xhr.withCredentials = true;
         xhr.onload = function () {
             if (this.status == 401) {
-                console.log(config.PAGE.LOGIN)
                 window.location.replace(config.PAGE.LOGIN);
             } else {
                 resolve({
@@ -53,6 +52,11 @@ export function makeRequest(method, url, data = null) {
     });
 }
 
+/**
+ * Show Basic Confirm alert Indicator
+ * @param {String} Text 
+ * @returns 
+ */
 export function alertConfirm(Text) {
     return confirm(Text)
 }

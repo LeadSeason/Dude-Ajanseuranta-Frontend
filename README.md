@@ -5,11 +5,20 @@ Uses bootstrap 5.3 alpha for style
 
 ## TODO 
 - [x] Major refactor
-- [ ] Fix admin login
-- [ ] Make UserData load per page /api/v1/user/times/${id}
+- [X] Fix Change password
+- [/] Finnish 🇫🇮 Add Adam
+- [X] Add are you sure when setting card what is is use
+- [X] Set background to primary-subtle when card is in use
+- [X] Make UserData load per page /api/v1/user/times/${id}
+- [ ] Change colore in user table
+- [ ] Export csv times table
 - [ ] idk Some thing on main page
 - [ ] Documentation
 - [ ] Eggward 🥚
+- [ ] Kinkku siukaleet
+- [ ] Sipuli lastuja
+- [ ] kermaa
+- [ ] Beer 🍺
 - [ ] Bread 🍞
 
 ## Setup
@@ -41,13 +50,14 @@ npm run build
 ```
 Build project is in the `dist/` directory
 ```
-.
+frontend
 ├── dist
 │   │ - Built website for production
 │   ├── admin
 │   ├── cards
 │   ├── login
 │   └── users
+│
 ├── node_modules
 │    - Node modules folder
 │   

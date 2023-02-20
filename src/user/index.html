@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Hello world!</title>
+	<include src="./src/common/head.html"></include>
+</head>
+
+<body data-bs-theme="dark">
+	<!-- Navbar -->
+	<include src="./src/common/navbar.html"></include>
+	<!-- Main Container -->
+	<div class="container d-flex justify-content-center">
+		<div id="textData" class="h1 my-5">Users </div>
+	</div>
+
+	<!-- Change week buttons, refresh and week display -->
+	<div class="container-md d-flex justify-content-center">
+		<div class="row p-2 w-100 border border-2 border rounded-top border-bottom-0">
+			<!-- Week back -->
+			<div class="col-2 d-grid gap-2">
+				<button type="button" name="" id="weekBack" class="btn btn-primary" data-bs-toggle="tooltip"
+					data-bs-title="Show previous week"><i class="fa fa-arrow-left"></i></button>
+			</div>
+			<!-- Filler to center week display -->
+			<div class="col-1 d-grid gap-2">
+			</div>
+			<!-- Week display -->
+			<div id="weekDisplay" class="col h2 text-light d-flex justify-content-center">
+				Week:
+			</div>
+			<!-- Refresh button -->
+			<div class="col-1 d-grid gap-2">
+				<button type="button" name="" id="weekRefresh" class="btn btn-success" data-bs-toggle="tooltip"
+					data-bs-title="Refresh">
+					<i class="fa fa-refresh"></i>
+				</button>
+			</div>
+			<!-- Next week -->
+			<div class="col-2 d-grid gap-2">
+				<button type="button" name="" id="weekForward" class="btn btn-primary" data-bs-toggle="tooltip"
+					data-bs-title="Show next week">
+					<i class="fa fa-arrow-right"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Week days display -->
+	<div class="container-md d-flex justify-content-center">
+		<div class="row p-2 w-100 border-2 border border-bottom-0">
+			<div class="col-1"></div>
+			<div class="col d-flex justify-content-center">ma</div>
+			<div class="col d-flex justify-content-center">ti</div>
+			<div class="col d-flex justify-content-center">ke</div>
+			<div class="col d-flex justify-content-center">to</div>
+			<div class="col d-flex justify-content-center">pe</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+
+	<!-- Weeks really long because I use col's to create splits -->
+	<div class="container-md d-flex justify-content-center pb-5">
+		<div class="row row-cols-6 w-100 vh-75 border">
+			<div class="col col-1 border ">
+				<div id="Week-null" class="row h-100 row-cols-1 text-end">
+					<div class="col border-bottom">6:00</div>
+					<div class="col border-bottom">7:00</div>
+					<div class="col border-bottom">8:00</div>
+					<div class="col border-bottom">9:00</div>
+					<div class="col border-bottom">10:00</div>
+					<div class="col border-bottom">11:00</div>
+					<div class="col border-bottom">12:00</div>
+					<div class="col border-bottom">13:00</div>
+					<div class="col border-bottom">14:00</div>
+					<div class="col border-bottom">15:00</div>
+					<div class="col border-bottom">16:00</div>
+					<div class="col border-bottom">17:00</div>
+					<div class="col">18:00</div>
+				</div>
+			</div>
+			<div id="Week-ma" class="col border d-grid">
+				<div class="row h-100 row-cols-1">
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col"></div>
+				</div>
+			</div>
+			<div id="Week-ti" class="col border">
+				<div class="row h-100 row-cols-1">
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col"></div>
+				</div>
+			</div>
+			<div id="Week-ke" class="col border">
+				<div class="row h-100 row-cols-1">
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col"></div>
+				</div>
+			</div>
+			<div id="Week-to" class="col border">
+				<div class="row h-100 row-cols-1">
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col"></div>
+				</div>
+			</div>
+			<div id="Week-pe" class="col border">
+				<div class="row h-100 row-cols-1">
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col border-bottom" style="z-index: -1;"></div>
+					<div class="col"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="conainer d-flex justify-content-center py-2">
+		<div class="d-grid gap-2">
+			<button type="button" name="" id="" class="btn btn-primary disabled" data-bs-toggle="tooltip"
+				data-bs-title="Export user data as .csv file."><i class="fa-solid fa-file-export"></i></button>
+		</div>
+	</div>
+
+	<div id="detailedTimeWeek" class="container-md p-2 fs-5">
+
+	</div>
+</body>
+
+
+</html>

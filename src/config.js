@@ -2,10 +2,12 @@ export const BACKEND_URL = "http://192.168.192.12:8082/api/v1";
 // export const BACKEND_URL = "http://localhost:8080";
 
 export class USER {
-  static GET_URL = BACKEND_URL + "/user/get";
+  static GET_URL = BACKEND_URL + "/user/get/";
+  static GET_ALL_URL = BACKEND_URL + "/users/get";
 	static ADD_URL = BACKEND_URL + "/user/add";
 	static REMOVE_URL = BACKEND_URL + "/user/remove";
 	static UPDATE_CARD_URL = BACKEND_URL + "/user/updatecard";
+  static GET_TIMES_URL = BACKEND_URL + "/user/times/"
 }
 
 export class CARD {
@@ -22,8 +24,20 @@ export class CARD {
 export class PAGE {
   static MAIN = "/index.html";
   static LOGIN = "/login/index.html";
+  static USERS = "/users/index.html"
+  static USER = "/user/index.html"
+}
+
+export class ADMIN {
+  static GET_URL = BACKEND_URL + "/admin/get/"
+  static GET_ALL_URL = BACKEND_URL + "/admins/get"
+  static ADD_URL = BACKEND_URL + "/admin/add"
 }
 
 export const LOGIN_URL = BACKEND_URL + "/login";
 export const LOGOUT_URL = BACKEND_URL + "/logout";
+export const CHANGE_PASSWORD_URL = BACKEND_URL + "/changepassword"
 export const VALIDATE_URL = BACKEND_URL + "/validate";
+
+export const UPDATE_INTERVAL_s = 10;
+export const UPDATE_INTERVAL_ms = UPDATE_INTERVAL_s * 1000;

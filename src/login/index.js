@@ -4,6 +4,10 @@ import {makeRequest} from "/js/utils"
 import * as config from "/config"
 
 
+/**
+ * Show errorMessage When input is invalid or server problems
+ * @param {string} errorMessage 
+ */
 function invalidDataShowError(errorMessage) {
     document.getElementById("alert").innerHTML = `
       <div class="alert alert-danger" role="alert">
@@ -12,6 +16,9 @@ function invalidDataShowError(errorMessage) {
         `
 }
 
+/**
+ * Will log in to database using credentials in the fields
+ */
 async function login() {
     let inputUser = document.getElementById("username");
     let inputPass = document.getElementById("password");
@@ -37,6 +44,10 @@ async function login() {
 }
 
 
+/**
+ * Ran on page loads
+ * Sets up EventListeners when change password button is pressed
+ */
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("login").addEventListener("click", login)
     // when enter is pressed call login() function.
