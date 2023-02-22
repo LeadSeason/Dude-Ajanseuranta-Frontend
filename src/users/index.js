@@ -267,19 +267,24 @@ async function removeUser(evt) {
 	}
 }
 
+/*
 async function refressLoop() {
     setTimeout(function() { 
 		getUsers()
         refressLoop();
     }, config.UPDATE_INTERVAL_ms);
 }
+*/
 
 document.addEventListener("DOMContentLoaded", async function () {
 	document.getElementById("adduserbutton").addEventListener("click", addUser);
-    refresh = document.getElementById("refresh");
+    let refresh = document.getElementById("refresh");
     refresh.addEventListener("click", getUsers);
 
+	getUsers();
+	/*
 	if (await getUsers()) {
 		refressLoop();
 	}
+	*/
 });

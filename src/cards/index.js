@@ -231,22 +231,26 @@ async function renameCard(evn) {
     }
 }
 
-
+/*
 async function refressLoop() {
     setTimeout(function() { 
         loadCards();
         refressLoop();
     }, config.UPDATE_INTERVAL_ms);
 }
+*/
 
 /**
  * Loads Cards and adds event lisners to all the buttons
  * On page load
  */
 document.addEventListener("DOMContentLoaded", async function () {
+    loadCards();
+    /*
     if (await loadCards()) {
         refressLoop();
     }
+    */
     
     readCardButton = document.getElementById("readCardButton");
     readCardButton.addEventListener("click", setReadingMode);
