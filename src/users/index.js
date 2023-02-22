@@ -207,8 +207,8 @@ async function addClickEventForChangeCardDropdown(cards) {
  */
 async function changeCard(evn) {
 	let activeCards = evn.currentTarget.ActiveCards;
-	let namecard = evn.explicitOriginalTarget.text;
-	let userid = evn.explicitOriginalTarget.id;
+	let namecard = evn.currentTarget.text;
+	let userid = evn.currentTarget.id;
 
 	console.log("changing card Id: " + userid + " cardname: " + namecard);
 
