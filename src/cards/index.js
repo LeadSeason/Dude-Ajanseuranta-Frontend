@@ -252,10 +252,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     */
     
-    readCardButton = document.getElementById("readCardButton");
+    let readCardButton = document.getElementById("readCardButton");
     readCardButton.addEventListener("click", setReadingMode);
-    refresh = document.getElementById("refresh");
+    let refresh = document.getElementById("refresh");
     refresh.addEventListener("click", loadCards);
-    readCardButtonCancel = document.getElementById("readCardButtonCancel");
+    let readCardButtonCancel = document.getElementById("readCardButtonCancel");
     readCardButtonCancel.addEventListener("click", cancelReadingMode);
 });
