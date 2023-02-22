@@ -1,4 +1,5 @@
-export const BACKEND_URL = "http://192.168.192.12:8082/api/v1";
+export const BACKEND_URL = "https://dudeworktimemanagment.leadseason.eu/api/v1";
+// export const BACKEND_URL = "http://192.168.192.12:8082/api/v1";
 // export const BACKEND_URL = "http://localhost:8080";
 
 export class USER {
