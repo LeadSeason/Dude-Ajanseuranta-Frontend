@@ -3,7 +3,7 @@
 
 <head>
   <title>Hello world!</title>
-	<include src="./src/common/head.html"></include>
+  <include src="./src/common/head.html"></include>
 </head>
 
 <body id="root" data-bs-theme="dark">
@@ -19,40 +19,39 @@
 
 
   <div class="container" align="center">
-    <form class="h-50 d-inline-block">
-      <div class="form-outline mb-4 mt-5">
-        <label class="form-label" for="username">Email address</label>
-        <input type="email" id="username" class="form-control bg-body-secondary" placeholder="email@domain.tld" />
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <form class="w-100 d-inline-block">
+          <div class="form-outline mb-4 mt-5">
+            <label class="form-label" for="username">Email address</label>
+            <input type="email" id="username" class="form-control bg-body-secondary" placeholder="email@domain.tld" />
+          </div>
+
+          <div class="form-outline mb-4">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" class="form-control bg-body-secondary" placeholder="Password" />
+          </div>
+
+          <div class="mb-4 d-flex">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="remember" checked />
+              <label class="form-check-label" for="remember"> Remember me </label>
+            </div>
+          </div>
+
+          <div class="row p-2">
+            <button type="button" class="btn btn-primary btn-block mb-4" id="login">Sign in <i class="fa fa-arrow-right"
+                aria-hidden="true"></i> </button>
+          </div>
+
+          <div id="alert" class="fade">
+            <div class="alert alert-danger" role="alert">
+              <p id="alertHeading" class="alert-heading m-1">${errorMessage}</p>
+            </div>
+          </div>
+        </form>
       </div>
-
-      <div class="form-outline mb-4">
-        <label class="form-label" for="password">Password</label>
-        <input type="password" id="password" class="form-control bg-body-secondary" placeholder="Password" />
-      </div>
-
-      <div class="mb-4 d-flex">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="remember" checked />
-          <label class="form-check-label" for="remember"> Remember me </label>
-        </div>
-      </div>
-
-      <div id="alert"></div>
-
-      <div class="row mb-4">
-        <button type="button" class="btn btn-primary btn-block mb-4" id="login">Sign in <i class="fa fa-arrow-right"
-            aria-hidden="true"></i> </button>
-
-        <div class="alert alert-danger invisible" role="alert">
-          <p class="alert-heading">Invalid username or passworld</p>
-        </div>
-
-        <!--
-        <a href="#!" onclick="alert('To be implemented later no promis')">Forgor password? 💀</a>
-        -->
-      </div>
-  </div>
-  </form>
+    </div>
   </div>
 </body>
 

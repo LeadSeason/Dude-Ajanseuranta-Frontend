@@ -1,0 +1,9 @@
+// This file gives vscode intelisense
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "/js/*": ["./js/*"]
+    }
+  }
+}

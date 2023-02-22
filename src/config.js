@@ -39,5 +39,5 @@ export const LOGOUT_URL = BACKEND_URL + "/logout";
 export const CHANGE_PASSWORD_URL = BACKEND_URL + "/changepassword"
 export const VALIDATE_URL = BACKEND_URL + "/validate";
 
-export const UPDATE_INTERVAL_s = 10;
+export const UPDATE_INTERVAL_s = 1;
 export const UPDATE_INTERVAL_ms = UPDATE_INTERVAL_s * 1000;

@@ -11,9 +11,11 @@ Uses bootstrap 5.3 alpha for style
 - [X] Set background to primary-subtle when card is in use
 - [X] Make UserData load per page /api/v1/user/times/${id}
 - [ ] Change colore in user table
-- [ ] Export csv times table
+- [ ] Export csv times table (mabe)
 - [ ] idk Some thing on main page
 - [ ] Documentation
+
+## Ruoka lista
 - [ ] Eggward 🥚
 - [ ] Kinkku siukaleet
 - [ ] Sipuli lastuja

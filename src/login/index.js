@@ -1,25 +1,45 @@
 import * as bootstrap from 'bootstrap';
-import {alert, success, warning, danger} from "/js/message"
-import {makeRequest} from "/js/utils"
+import { alert, success, warning, danger } from "/js/message"
+import { makeRequest } from "/js/utils"
 import * as config from "/config"
 
+var disableInput = false;
 
 /**
  * Show errorMessage When input is invalid or server problems
  * @param {string} errorMessage 
  */
 function invalidDataShowError(errorMessage) {
-    document.getElementById("alert").innerHTML = `
-      <div class="alert alert-danger" role="alert">
-        <p class="alert-heading">` + errorMessage + `</p>
-      </div>
-        `
+    const alert = document.getElementById("alert")
+    document.getElementById("alertHeading").innerHTML = errorMessage
+
+    alert.setAttribute("class", "fade show")
+
+    setTimeout(function () {
+        alert.setAttribute("class", "fade")
+    }, 5000)
 }
 
 /**
  * Will log in to database using credentials in the fields
  */
 async function login() {
+    let loginbutton = document.getElementById("login");
+
+    // save HTML to be changed back when login is done
+    let loginButtonInnerHTML = loginbutton.innerHTML;
+
+    let spinner = document.createElement("span");
+    spinner.setAttribute("class", "spinner-border spinner-border-sm");
+    spinner.setAttribute("role", "status");
+    spinner.setAttribute("aria-hidden", "true");
+
+    loginbutton.innerHTML = "";
+    loginbutton.append(spinner);
+    loginbutton.disabled = true;
+    disableInput = true;
+
+    // Get values
     let inputUser = document.getElementById("username");
     let inputPass = document.getElementById("password");
     let inputRemb = document.getElementById("remember");
@@ -39,8 +59,15 @@ async function login() {
     } else {
         // any other show error
         inputPass.value = "";
-        invalidDataShowError("Server error, contact administrator.");
+        invalidDataShowError("A server error occurred.<br>Please contact the administrator.");
     }
+
+    // Restore original data
+    loginbutton.innerHTML = loginButtonInnerHTML;
+    setTimeout(function () {
+        loginbutton.disabled = false;
+        disableInput = false;
+    }, 200)
 }
 
 
@@ -56,7 +83,9 @@ document.addEventListener("DOMContentLoaded", function () {
     input.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
-            login();
+            if (!disableInput) {
+                login();
+            }
         }
     });
 });

@@ -1,19 +1,23 @@
 import * as bootstrap from 'bootstrap';
 import { logout } from "/js/logout"
 import { alert, success, warning, danger } from "/js/message"
-import { makeRequest } from "/js/utils"
+import { makeRequest } from "/js/utils.js"
 import * as config from "/config"
 
 /**
  * Show errorMessage When input is invalid or server problems
- * @param {string} errorMessage 
+ * @param {string} errorMessage Name of the message
+ * @param {string} alertElementID Alert Elememt
  */
-function invalidDataShowError(errorMessage) {
-    document.getElementById("alert").innerHTML = `
-      <div class="alert alert-danger fade" role="alert">
-        <p class="alert-heading">` + errorMessage + `</p>
-      </div>
-        `
+function invalidDataShowError(errorMessage, alertElementID) {
+    const alert = document.getElementById(alertElementID);
+    alert.innerText = errorMessage;
+
+    alert.setAttribute("class", "fs-5 p-0 text-danger fade show");
+
+    setTimeout(function () {
+        alert.setAttribute("class", "fs-5 p-0 text-danger fade");
+    }, 5000)
 }
 
 /**
@@ -30,7 +34,7 @@ async function changePassword() {
     let inputPass3 = document.getElementById("pass3").value;
 
     if (inputPass2 != inputPass3) {
-        invalidDataShowError("Passwords dont match")
+        invalidDataShowError("Passwords dont match", "changePasswordAlert")
         return
     }
 
@@ -46,13 +50,13 @@ async function changePassword() {
         inputPass1 = "";
         inputPass2 = "";
         inputPass3 = "";
-        invalidDataShowError("Invalid username or passworld.");
+        invalidDataShowError("Invalid username or passworld.", "changePasswordAlert");
     } else {
         // any other show error
         inputPass1 = "";
         inputPass2 = "";
         inputPass3 = "";
-        invalidDataShowError("Server error, contact administrator.");
+        invalidDataShowError("Server error, contact administrator.", "changePasswordAlert");
     }
 
 }
@@ -68,6 +72,7 @@ async function addAdministrator() {
 
     if (data.status == 200) {
         new success("Success", "Added new user: " + mail + ".").show();
+        renderAdministrator();
         mail = "";
         pass = "";
     } else {
@@ -116,26 +121,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     getAdministrators();
 
+    document.getElementById("add-pass").addEventListener("keypress", function (event) {
+        if (event.key == "Enter") {
+            addAdministrator();
+        }
+    });
 
-    // when enter is pressed call login() function.
-    /* 
-    * @TODO Make CLicking on current 
-    * 
-    * @CODE
-    * var input = document.getElementById("root");
-    * 
-    * input.addEventListener("keypress", function (event) {
-    *     if (event.key === "Enter") {
-    *         event.preventDefault();
-    *         changePassword();
-    *     }
-    * });
-    * 
-    * function clickPress(event) {
-    *     if (event.key == "Enter") {
-    *         // do something
-    *     }
-    * }
-    * @ENDCODE
-    */
+    document.getElementById("pass3").addEventListener("keypress", function (event) {
+        if (event.key == "Enter") {
+            changePassword();
+        }
+    });
 });

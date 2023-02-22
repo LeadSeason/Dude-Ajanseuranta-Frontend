@@ -1,7 +1,7 @@
 import * as bootstrap from 'bootstrap';
 import { logout } from "/js/logout"
 import { alert, success, warning, danger } from "/js/message"
-import { makeRequest } from "/js/utils"
+import { makeRequest, alertConfirm } from "/js/utils"
 import * as config from "/config"
 
 let CardReadingCanceled = false;
@@ -55,7 +55,7 @@ async function cardReadingModeTimer() {
         displayTime(countTime)
         return
     }
-    countTime = 300;
+    countTime = 180;
     while (countTime > 0 && !CardReadingCanceled) {
         displayTime(countTime)
 
@@ -124,7 +124,7 @@ async function loadCards() {
         // exit if unable to get cards
 		console.log("Failed to get cards");
         new danger("Warning", "Failed to get cards").show()
-		return
+		return false
     }
 
     var cardList = document.getElementById("cardList")
@@ -186,6 +186,10 @@ async function loadCards() {
 async function deleteCard(evn) {
     let id = evn.currentTarget.CardID
 
+    if (!alertConfirm("Are you sure about this")) {
+        return
+    }
+
     var data = await makeRequest('POST', config.CARD.REMOVE_URL, JSON.stringify({
         "id": Number(id)
     }));
@@ -228,13 +232,22 @@ async function renameCard(evn) {
 }
 
 
+async function refressLoop() {
+    setTimeout(function() { 
+        loadCards();
+        refressLoop();
+    }, config.UPDATE_INTERVAL_ms);
+}
+
 /**
  * Loads Cards and adds event lisners to all the buttons
  * On page load
  */
-document.addEventListener("DOMContentLoaded", function () {
-    loadCards();
-
+document.addEventListener("DOMContentLoaded", async function () {
+    if (await loadCards()) {
+        refressLoop();
+    }
+    
     readCardButton = document.getElementById("readCardButton");
     readCardButton.addEventListener("click", setReadingMode);
     refresh = document.getElementById("refresh");

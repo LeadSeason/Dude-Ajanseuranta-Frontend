@@ -21,18 +21,17 @@
 					<div class="form-outline mb-3">
 						<label class="form-label" for="add-email">Admin account Email</label>
 						<input type="email" id="add-email" class="form-control bg-body-secondary"
-							placeholder="User@domain.tld" />
+							placeholder="Administraotr@domain.tld" />
 					</div>
 
-					<div class="form-outline mb-3">
+					<div class="form-outline mb-1">
 						<label class="form-label" for="add-pass">Admin acccount password</label>
 						<input type="password" id="add-pass" class="form-control bg-body-secondary"
 							placeholder="Password" />
 					</div>
 
-					<div id="add-alert"></div>
-
 					<div class="row mb-4">
+						<p id="addAccountAlert" class="fs-5 p-0 text-danger"></p>
 						<button type="button" class="btn btn-primary btn-block mb-4" id="addAccount">Add account
 							<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 					</div>
@@ -54,21 +53,17 @@
 							placeholder="New password" />
 					</div>
 
-					<div class="form-outline mb-4">
+					<div class="form-outline mb-1">
 						<label class="form-label" for="pass3">New Password Again</label>
 						<input type="password" id="pass3" class="form-control bg-body-secondary"
 							placeholder="New password Again" />
 					</div>
 
-					<div id="alert"></div>
-
 					<div class="row mb-4">
+						<p id="changePasswordAlert" class="fs-5 p-0 text-danger fade">ErrorMessage</p>
 						<button type="button" class="btn btn-primary btn-block mb-4" id="changePassword">Change Password
-							<i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-
-						<div class="alert alert-danger invisible" role="alert">
-							<p class="alert-heading">Invalid username or passworld</p>
-						</div>
+							<i class="fa fa-arrow-right" aria-hidden="true"></i>
+						</button>
 					</div>
 				</form>
 			</div>

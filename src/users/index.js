@@ -1,4 +1,4 @@
-import * as bootstrap from 'bootstrap';
+import * as bootstrap from 'bootstrap'
 import { logout } from "/js/logout"
 import { alert, success, warning, danger } from "/js/message"
 import { makeRequest, alertConfirm } from "/js/utils"
@@ -16,7 +16,7 @@ async function addUser() {
     }));
 
 	if (data.status == 200) {
-        new success("Success", "User "+ username +"added").show()
+        new success("Success", "User "+ username +" added").show()
 		inputfield.value = "";
 		getUsers();
 	} else {
@@ -35,7 +35,7 @@ async function getUsers() {
 	if (users.status != 200) {
 		console.log("Failed to get users");
         new danger("Warning", "Failed to get users").show()
-		return
+		return false
 	}
 
 	var cards = await makeRequest('GET', config.CARD.GET_URL);
@@ -43,7 +43,7 @@ async function getUsers() {
 	if (cards.status != 200) {
 		console.log("Failed to get cards");
         new danger("Warning", "Failed to get cards").show()
-		return
+		return false
 	}
 
 	users = JSON.parse(users.body);
@@ -52,6 +52,9 @@ async function getUsers() {
 	await renderUserData(users, cards)
 	AddClickEventForDeleteButton()
 	addClickEventForChangeCardDropdown(cards)
+
+	// return True to start refresh loop.
+	return true;
 }
 
 
@@ -172,7 +175,7 @@ async function getCardListDropdown(cards, user, users) {
 }
 
 /**
- * Adds ClockEvents to card dropdowns
+ * Adds ClickEvents to card dropdowns
  * Clicking a card will call the changeCard function 
  * @param {JSON} cards 
  */
@@ -264,10 +267,19 @@ async function removeUser(evt) {
 	}
 }
 
+async function refressLoop() {
+    setTimeout(function() { 
+		getUsers()
+        refressLoop();
+    }, config.UPDATE_INTERVAL_ms);
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
 	document.getElementById("adduserbutton").addEventListener("click", addUser);
     refresh = document.getElementById("refresh");
     refresh.addEventListener("click", getUsers);
 
-	getUsers()
+	if (await getUsers()) {
+		refressLoop();
+	}
 });
