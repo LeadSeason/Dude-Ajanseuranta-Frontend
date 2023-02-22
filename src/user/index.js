@@ -138,7 +138,7 @@ async function timedetailed(dataArray) {
             let workdoneNow = (Number(end_time) - Number(begin_time)) / 1000
 
             let hours = Math.floor(workdoneNow / 3600);
-            let minutes = Math.floor(workdoneNow - hours * 3600) / 60;
+            let minutes = Math.floor((workdoneNow - hours * 3600) / 60);
             if (String(minutes).length == 1) {
                 minutes = "0" + String(minutes);
             }
