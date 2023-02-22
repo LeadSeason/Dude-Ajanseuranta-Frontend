@@ -7,13 +7,17 @@ import * as config from "/config"
  * if success will retrun to login page
  */
 export async function logout() {
-    var data = await makeRequest('POST', config.LOGOUT_URL);
+    var data = await makeRequest('Post', config.LOGOUT_URL);
     if (data.status == 200) {
         new success("Success", "Logged out.").show();
         window.location.replace(config.PAGE.LOGIN);
     } else {
         new danger("Warning", "Unable to logout, Error: " + data.status);
     }
+}
+
+async function validateSession() {
+    await makeRequest('GET', config.VALIDATE_URL);
 }
 
 
@@ -27,3 +31,5 @@ document.addEventListener("DOMContentLoaded", function () {
         element.addEventListener('click', logout);
     }
 });
+
+validateSession();
