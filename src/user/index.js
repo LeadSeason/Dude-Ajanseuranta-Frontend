@@ -192,13 +192,13 @@ async function updateWeekDisplay() {
 async function weekPrev() {
     selectedWeek--;
     updateWeekDisplay();
-    // updateWeek();
+    updateWeek();
 }
 
 async function weekNext() {
     selectedWeek++;
     updateWeekDisplay();
-    // updateWeek();
+    updateWeek();
 }
 
 async function refressLoop() {
@@ -220,8 +220,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     updateWeekDisplay();
 
-    // selectedUser = await getUserData();
-    // addUserName("username: " + selectedUser.name + " Cardname: " + selectedUser.cardname);
-    // updateWeek();
-    // refressLoop();
+    selectedUser = await getUserData();
+    addUserName("username: " + selectedUser.name + " Cardname: " + selectedUser.cardname);
+    updateWeek();
+    refressLoop();
 });
