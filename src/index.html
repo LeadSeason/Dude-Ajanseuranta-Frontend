@@ -10,9 +10,46 @@
 	<!-- Navbar -->
 	<include src="./src/common/navbar.html"></include>
 	<!-- Main Container -->
-	<div class="container d-flex justify-content-center">
-		<div class="h1 mt-5">BurgerKing 🍔</div>
+	<div class="container-md d-flex justify-content-center">
+		<div class="row p-2 w-100">
+			<ol class="list-group pb-2">
+				<li class="list-group-item align-items-start">
+					<div class="row">
+						<!-- Week back -->
+						<div class="col-2 d-grid gap-2">
+							<button type="button" name="" id="weekBack" class="btn btn-primary" data-bs-toggle="tooltip"
+								data-bs-title="Show previous week"><i class="fa fa-arrow-left"></i></button>
+						</div>
+						<!-- Filler to center week display -->
+						<div class="col-1 d-grid gap-2">
+						</div>
+						<!-- Week display -->
+						<div id="weekDisplay" class="col h2 text-light d-flex">
+							Week:
+						</div>
+						<!-- Refresh button -->
+						<div class="col-1 d-grid gap-2">
+							<button type="button" name="" id="weekRefresh" class="btn btn-success"
+								data-bs-toggle="tooltip" data-bs-title="Refresh">
+								<i class="fa fa-refresh"></i>
+							</button>
+						</div>
+						<!-- Next week -->
+						<div class="col-2 d-grid gap-2">
+							<button type="button" name="" id="weekForward" class="btn btn-primary"
+								data-bs-toggle="tooltip" data-bs-title="Show next week">
+								<i class="fa fa-arrow-right"></i>
+							</button>
+						</div>
+					</div>
+				</li>
+			</ol>
+			<ol id="UserList" class="list-group">
+			</ol>
+		</div>
 	</div>
+
+	<!-- Make Parcel Builld these sites because the are only reffrenced by javascript-->
 	<a href="/login/index.html"></a>
 	<a href="/user/index.html"></a>
 </body>
