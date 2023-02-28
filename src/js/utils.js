@@ -1,19 +1,32 @@
 /**
- * Aditional utils file
+ * Additional utils file
  * Has tools that are used in may places
  */
 import { alert, success, warning, danger } from "/js/message"
 import * as config from "/config"
 
-
 /**
- * Make A async request
- * example ```js
- * var data = await makeRequest('GET' url, requestData);
+ * Make An asynchronous Request
+ * @param {string} method Method of request example: 'GET' 'POST' 'OPTIONS'
+ * @param {string} url Url of requested data: 'https://leadseason.eu'
+ * @param {JSON} data Data (Optional) {"userId": 123}
+ * 
+ * @example GET request example
+ * var data = await makeRequest('GET', 'https://example.com');
  * console.log(data.status) 
  * console.log(data.statusText)
  * console.log(data.body)
- * ```
+ * 
+ * @example POST request example
+ * var data = await makeRequest('GET', 'https://example.com/update', JSON.stringify({
+ *     "username": "admin",
+ *     "password": "p455w02d"
+ * }));
+ * console.log(data.status) 
+ * console.log(data.statusText)
+ * console.log(data.body)
+ * 
+ * @returns Promise()
  */
 export function makeRequest(method, url, data = null) {
     return new Promise(function (resolve, reject) {
@@ -55,7 +68,12 @@ export function makeRequest(method, url, data = null) {
 /**
  * Show Basic Confirm alert Indicator
  * @param {String} Text 
- * @returns 
+ * @returns Bool
+ * @example
+ * if (alertConfirm(`Are you sure you want to delete ${user}`))
+ * {
+ *      delete(user)
+ * }
  */
 export function alertConfirm(Text) {
     return confirm(Text)

@@ -24,30 +24,32 @@ function invalidDataShowError(errorMessage) {
  * Will log in to database using credentials in the fields
  */
 async function login() {
-    let loginbutton = document.getElementById("login");
+    let loginButton = document.getElementById("login");
 
     // save HTML to be changed back when login is done
-    let loginButtonInnerHTML = loginbutton.innerHTML;
+    let loginButtonInnerHTML = loginButton.innerHTML;
 
     let spinner = document.createElement("span");
     spinner.setAttribute("class", "spinner-border spinner-border-sm");
     spinner.setAttribute("role", "status");
     spinner.setAttribute("aria-hidden", "true");
 
-    loginbutton.innerHTML = "";
-    loginbutton.append(spinner);
-    loginbutton.disabled = true;
+    // show spinner while login request is being processed
+    // also it looks cool
+    loginButton.innerHTML = "";
+    loginButton.append(spinner);
+    loginButton.disabled = true;
     disableInput = true;
 
     // Get values
     let inputUser = document.getElementById("username");
     let inputPass = document.getElementById("password");
-    let inputRemb = document.getElementById("remember");
+    let inputRemember = document.getElementById("remember");
 
     var data = await makeRequest('POST', config.LOGIN_URL, JSON.stringify({
         "username": inputUser.value,
         "password": inputPass.value,
-        "remember": inputRemb.checked
+        "remember": inputRemember.checked
     }));
 
     if (data.status == 200) {
@@ -55,7 +57,7 @@ async function login() {
     } else if (data.status == 401) {
         // 401 Invalid password
         inputPass.value = "";
-        invalidDataShowError("Invalid username or passworld.");
+        invalidDataShowError("Invalid username or password.");
     } else {
         // any other show error
         inputPass.value = "";
@@ -63,9 +65,9 @@ async function login() {
     }
 
     // Restore original data
-    loginbutton.innerHTML = loginButtonInnerHTML;
+    loginButton.innerHTML = loginButtonInnerHTML;
     setTimeout(function () {
-        loginbutton.disabled = false;
+        loginButton.disabled = false;
         disableInput = false;
     }, 200)
 }

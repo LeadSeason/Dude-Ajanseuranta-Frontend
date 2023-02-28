@@ -1,5 +1,5 @@
 /**
- * Messsage libaraty
+ * Message library
  * Shows bootstrap toast messages in the bottom right corner
  * Stacks messages if multiple are sent
  */
@@ -8,10 +8,10 @@ import * as bootstrap from 'bootstrap';
 /**
  * Show alert message when called
  * @param {string} title Title of the message
- * @param {string} description aditional information
+ * @param {string} description additional information
  * @example
  * import { alert, success, warning, danger } from "/js/message"
- * new alert("Info", "Infor user of something").show();
+ * new alert("Info", "Inform user of something").show();
  */
 export function alert(title, description) {
     var toastElement = buildToast(title, description, "fa-info-circle", "primary");
@@ -34,9 +34,9 @@ export function alert(title, description) {
 
 
 /**
- * Show Sucess message when called
+ * Show Success message when called
  * @param {string} title Title of the message
- * @param {string} description aditional information
+ * @param {string} description additional information
  * @example
  * import { alert, success, warning, danger } from "/js/message"
  * new Success("Success", "Awesome you did something").show();
@@ -64,7 +64,7 @@ export function success(title, description) {
 /**
  * Show Warning message when called
  * @param {string} title Title of the message
- * @param {string} description aditional information
+ * @param {string} description additional information
  * @example
  * import { alert, success, warning, danger } from "/js/message"
  * new warning("Warning", "This will cause problems later").show();
@@ -92,10 +92,10 @@ export function warning(title, description) {
 /**
  * Show Danger message when called
  * @param {string} title Title of the message
- * @param {string} description aditional information
+ * @param {string} description additional information
  * @example
  * import { alert, success, warning, danger } from "/js/message"
- * new danger("Warnign", "Someting failed").show();
+ * new danger("Warning", "Something failed").show();
  */
 export function danger(title, description) {
     var toastElement = buildToast(title, description, "fa-warning", "danger");

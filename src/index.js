@@ -3,10 +3,10 @@ import * as bootstrap from 'bootstrap';
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import isoWeeksInYears from 'dayjs/plugin/isoWeeksInYear';
-import isLeepYear from 'dayjs/plugin/isLeapYear';
+import isLeapYear from 'dayjs/plugin/isLeapYear';
 dayjs.extend(weekOfYear)
 dayjs.extend(isoWeeksInYears)
-dayjs.extend(isLeepYear)
+dayjs.extend(isLeapYear)
 
 import { logout } from "/js/logout";
 import { alert, success, warning, danger } from "/js/message";
@@ -26,11 +26,11 @@ const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
 /**
  * Gets user id from url param and return requested data from backend
- * @returns JSON userdata
+ * @returns JSON userData
  */
 async function getUserData() {
-    const CURENT_URL = new URL(window.location.toLocaleString());
-    const URL_PARAMS = CURENT_URL.searchParams;
+    const CURRENT_URL = new URL(window.location.toLocaleString());
+    const URL_PARAMS = CURRENT_URL.searchParams;
     const userId = URL_PARAMS.get("user");
 
     if (userId == null) {
@@ -47,6 +47,10 @@ async function getUserData() {
     }
 }
 
+/**
+ * 
+ * @returns false on failure
+ */
 async function updateWeek() {
     let data = await makeRequest("GET", config.USER.GET_ALL_URL);
     document.getElementById("UserList").innerHTML = "";
@@ -58,6 +62,7 @@ async function updateWeek() {
             await appendUser(user);
         }
     } else {
+        new danger("Warning", "Failed to get user data.").show();
         return false;
     }
 }
@@ -133,11 +138,11 @@ async function getUserWeekTimes(userId) {
         const begin_time = dayjs(begin_time_unix * 1000);
         const end_time = dayjs(end_time_unix * 1000);
 
-        // Check if week is currerly selected
+        // Check if week is currently selected
         if (begin_time.week() == selectedWeek) {
-            let workdoneNow = (Number(end_time) - Number(begin_time)) / 1000
-            currentWeekTimeDoneTime += workdoneNow;
-            daysData[begin_time.day()] += workdoneNow;
+            let workDoneNow = (Number(end_time) - Number(begin_time)) / 1000
+            currentWeekTimeDoneTime += workDoneNow;
+            daysData[begin_time.day()] += workDoneNow;
         }
     }
     return [currentWeekTimeDoneTime, daysData];
@@ -181,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
-    // Add rective buttons
+    // Add reactive buttons
     document.getElementById("weekBack").addEventListener("click", weekPrev);
     document.getElementById("weekForward").addEventListener("click", weekNext);
     document.getElementById("weekRefresh").addEventListener("click", updateWeek);

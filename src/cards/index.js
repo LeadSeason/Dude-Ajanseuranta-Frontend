@@ -11,14 +11,14 @@ let countTime = 0;
 
 
 /**
- * @brief  Sleeps given amount in milli seconds
+ * Sleeps given amount in milliseconds
  * @param {int} ms 
  * @returns Promise
- * @code
- * console.log("Warning Hello World Will be printend in 10 seconds");
+ * @example
+ * console.log("Warning Hello World Will be printed in 10 seconds");
  * await sleep(10000);
  * console.log("Hello World")
- * @endcode
+ * 
  */
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -122,9 +122,9 @@ async function loadCards() {
     var data = await makeRequest('GET', config.CARD.GET_URL);
     if (data.status != 200) {
         // exit if unable to get cards
-		console.log("Failed to get cards");
+        console.log("Failed to get cards");
         new danger("Warning", "Failed to get cards").show()
-		return false
+        return false
     }
 
     var cardList = document.getElementById("cardList")
@@ -172,6 +172,12 @@ async function loadCards() {
     var newCardNames = document.getElementsByClassName("renameCardClass")
     for (let i = 0; i < removeCards.length; i++) {
         var event = newCardNames[i];
+
+        document.getElementById("newCardName" + i).addEventListener("keypress", function (event) {
+            if (event.key == "Enter") {
+            }
+        });
+
         let id = newCardNames[i].id;
         event.addEventListener('click', renameCard);
         event.CardIndex = i;
@@ -215,7 +221,7 @@ async function renameCard(evn) {
     if (newname.length < 2) {
         new warning("Warning", "Cannot set card name to empty. Minimum length is 2.").show()
         return
-    } 
+    }
 
     var data = await makeRequest('POST', config.CARD.RENAME_URL, JSON.stringify({
         "cardid": id,
@@ -232,26 +238,26 @@ async function renameCard(evn) {
 }
 
 /*
-async function refressLoop() {
+async function refreshLoop() {
     setTimeout(function() { 
         loadCards();
-        refressLoop();
+        refreshLoop();
     }, config.UPDATE_INTERVAL_ms);
 }
 */
 
 /**
- * Loads Cards and adds event lisners to all the buttons
+ * Loads Cards and adds EventListeners to all the buttons
  * On page load
  */
 document.addEventListener("DOMContentLoaded", async function () {
     loadCards();
     /*
     if (await loadCards()) {
-        refressLoop();
+        refreshLoop();
     }
     */
-    
+
     let readCardButton = document.getElementById("readCardButton");
     readCardButton.addEventListener("click", setReadingMode);
     let refresh = document.getElementById("refresh");

@@ -7,7 +7,7 @@ import * as config from "/config"
 /**
  * Show errorMessage When input is invalid or server problems
  * @param {string} errorMessage Name of the message
- * @param {string} alertElementID Alert Elememt
+ * @param {string} alertElementID Alert Element
  */
 function invalidDataShowError(errorMessage, alertElementID) {
     const alert = document.getElementById(alertElementID);
@@ -34,7 +34,7 @@ async function changePassword() {
     let inputPass3 = document.getElementById("pass3").value;
 
     if (inputPass2 != inputPass3) {
-        invalidDataShowError("Passwords dont match", "changePasswordAlert")
+        invalidDataShowError("Passwords don't match", "changePasswordAlert")
         return
     }
 
@@ -50,7 +50,7 @@ async function changePassword() {
         inputPass1 = "";
         inputPass2 = "";
         inputPass3 = "";
-        invalidDataShowError("Invalid username or passworld.", "changePasswordAlert");
+        invalidDataShowError("Invalid username or password.", "changePasswordAlert");
     } else {
         // any other show error
         inputPass1 = "";
@@ -61,6 +61,10 @@ async function changePassword() {
 
 }
 
+/**
+ * Add administrator
+ * Sends an add administrator Request to backend.
+ */
 async function addAdministrator() {
     let mail = document.getElementById("add-email").value;
     let pass = document.getElementById("add-pass").value;
@@ -80,6 +84,11 @@ async function addAdministrator() {
     }
 }
 
+/**
+ * Render administrator on web page
+ * Gets list of administrators and sends data to renderAdministrator()
+ * @returns None if requests fails
+ */
 async function getAdministrators() {
     var data = await makeRequest('GET', config.ADMIN.GET_ALL_URL);
     
@@ -87,14 +96,17 @@ async function getAdministrators() {
         new danger("Fail", "Failed to get administrators");
         return;
     }
-    var administraots = JSON.parse(data.body);
+    var administrators = JSON.parse(data.body);
 
-    renderAdministrator(administraots);
+    renderAdministrator(administrators);
 }
 
+/**
+ * Parse administrators and append to web page
+ * @param {JSON} admins List of admins
+ */
 async function renderAdministrator(admins) {
     var adminList = document.getElementById("adminList");
-    console.log(admins);
     for (let i = 0; i < admins.length; i++) {
         const admin = admins[i];
 
@@ -116,11 +128,12 @@ async function renderAdministrator(admins) {
  * Sets up EventListeners when change password button is pressed
  */
 document.addEventListener("DOMContentLoaded", async function () {
+    // Setup EventListeners for buttons
     document.getElementById("changePassword").addEventListener("click", changePassword)
     document.getElementById("addAccount").addEventListener("click", addAdministrator)
 
-    getAdministrators();
-
+    // Add EventListeners to input form
+    // when enter pressed in add-pass for add administrators
     document.getElementById("add-pass").addEventListener("keypress", function (event) {
         if (event.key == "Enter") {
             addAdministrator();
@@ -132,4 +145,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             changePassword();
         }
     });
+
+    getAdministrators();
 });

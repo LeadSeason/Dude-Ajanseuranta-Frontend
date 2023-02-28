@@ -8,8 +8,8 @@ import * as config from "/config"
  * AddUser callback Adds user with name given from usernameInput field
  */
 async function addUser() {
-	var inputfield = document.getElementById("usernameInput")
-	var username = inputfield.value
+	var inputField = document.getElementById("usernameInput")
+	var username = inputField.value
 
     var data = await makeRequest('POST', config.USER.ADD_URL, JSON.stringify({
 		"username": username,
@@ -17,7 +17,7 @@ async function addUser() {
 
 	if (data.status == 200) {
         new success("Success", "User "+ username +" added").show()
-		inputfield.value = "";
+		inputField.value = "";
 		getUsers();
 	} else {
         new danger("Warning", "Failed to add user").show()
@@ -25,7 +25,7 @@ async function addUser() {
 }
 
 /**
- * Generates User list and adds it to the id="Userlist" div
+ * Generates User list and adds it to the id="UserList" div
  * run at page load
  */
 async function getUsers() {
@@ -65,8 +65,8 @@ async function getUsers() {
  * 
  * @TODO never
  * This is overly complicatedly done code could be improved by using selection
- * and options, then just lisening to change event, Im not going to change this
- * at this time as it currently works but is terrebly implemented. 👍
+ * and options, then just listening to change event, Im not going to change this
+ * at this time as it currently works but is terribly implemented. 👍
  * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event
  * 
  * 
@@ -94,9 +94,9 @@ async function renderUserData(users, cards) {
 	for (let i = 0; i < users.length; i++) {
 		let obj = users[i];
 
-		var useractive = "";
+		var userActive = "";
 		if  (obj.present) {
-			useractive = "bg-success"
+			userActive = "bg-success"
 		}
 
 		// when last render bottom border 
@@ -117,12 +117,12 @@ async function renderUserData(users, cards) {
 		// generate main card list
 		UserList.innerHTML += `
 <div class="row text-light fs-5 justify-content-lg-center border-2 border-secondary">
-	<div class="col-lg-3 col border-start border-top `+ useractive + " " + border +`">
+	<div class="col-lg-3 col border-start border-top `+ userActive + " " + border +`">
 		<a class="link-light" href="/user/index.html?user=`+ obj.id +`">`+ obj.name +`</a>
 	</div>
-	<div class="col-lg-4 col border-start border-top `+ useractive + " " + border +`">
+	<div class="col-lg-4 col border-start border-top `+ userActive + " " + border +`">
 		<div class="btn-group">
-			<button class="btn btn-dark dropdown-toggle `+ useractive +`" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
+			<button class="btn btn-dark dropdown-toggle `+ userActive +`" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">
 				`+ obj.cardname + `
 			</button>
@@ -131,7 +131,7 @@ async function renderUserData(users, cards) {
 			</div>
 		</div>
 	</div>
-	<div class="col-1 border-start text-center border-top border-end `+ useractive + " " + border + ` ">
+	<div class="col-1 border-start text-center border-top border-end `+ userActive + " " + border + ` ">
 		<button id=`+ obj.id +` class="removeCardClass btn btn-link text-danger"><i class="fa fa-trash-can"></i></button>
 	</div>
 </div>
@@ -152,8 +152,8 @@ async function getCardListDropdown(cards, user, users) {
 		var active = "";
 		var card = cards[i2]
 
-		// classname to be used later for change card functionaity
-		var classname = "ChangecardDropdown-" + cards[i2].cardname;
+		// classnames to be used later for change card functionality
+		var className = "ChangecardDropdown-" + cards[i2].cardname;
 
 		for (let index = 0; index < users.length; index++) {
 			const element = users[index];
@@ -169,7 +169,7 @@ async function getCardListDropdown(cards, user, users) {
 
 		// add cards to drop down
 		// set username into id to be used late to change cards
-		cardsDropdown += `<a id="`+ user.id+`" class="`+ classname +` dropdown-item `+ active +`" href="#">`+ card.cardname +`</a>`
+		cardsDropdown += `<a id="`+ user.id+`" class="`+ className +` dropdown-item `+ active +`" href="#">`+ card.cardname +`</a>`
 	}
 	return cardsDropdown
 }
@@ -190,11 +190,11 @@ async function addClickEventForChangeCardDropdown(cards) {
 	}
 
 	for (let i = 0; i < cards.length; i++) {
-		var classname = "ChangecardDropdown-" + cards[i].cardname;
-		var changecard = document.getElementsByClassName(classname)
-		for (let i = 0; i < changecard.length; i++) {
+		var className = "ChangecardDropdown-" + cards[i].cardname;
+		var changeCard = document.getElementsByClassName(className)
+		for (let i = 0; i < changeCard.length; i++) {
 			// when cad is pressed change card
-			var card = changecard[i]
+			var card = changeCard[i]
 			card.addEventListener('click', changeCard);
 			card.ActiveCards = activeCards;
 		}
@@ -207,15 +207,15 @@ async function addClickEventForChangeCardDropdown(cards) {
  */
 async function changeCard(evn) {
 	let activeCards = evn.currentTarget.ActiveCards;
-	let namecard = evn.currentTarget.text;
-	let userid = evn.currentTarget.id;
+	let nameCard = evn.currentTarget.text;
+	let userId = evn.currentTarget.id;
 
-	console.log("changing card Id: " + userid + " cardname: " + namecard);
+	console.log("changing card Id: " + userId + " cardname: " + nameCard);
 
 	// Check if card is used by some one
 	for (let i = 0; i < activeCards.length; i++) {
 		const aCard = activeCards[i];
-		if (aCard.cardname == namecard)  {
+		if (aCard.cardname == nameCard)  {
 			// if used ask user to confirm
 			if (!alertConfirm("Card In use by " + aCard.assingedto)) {
 				// cancel Exit function
@@ -226,8 +226,8 @@ async function changeCard(evn) {
 
 	// Make request to change card
 	var data = await makeRequest('POST', config.USER.UPDATE_CARD_URL, JSON.stringify({
-		"userid": Number(userid),
-		"cardname": namecard
+		"userid": Number(userId),
+		"cardname": nameCard
 	}))
 
 	if (data.status == 200) {
@@ -239,7 +239,7 @@ async function changeCard(evn) {
 }
 
 async function AddClickEventForDeleteButton() {
-	// generate event triggers for removeCardclassed buttons
+	// generate event triggers for removeCardClassed buttons
 	var removeCards = document.getElementsByClassName("removeCardClass")
 	for (let i = 0; i < removeCards.length; i++) {
 		// when remove card is clicked run code
@@ -268,23 +268,23 @@ async function removeUser(evt) {
 }
 
 /*
-async function refressLoop() {
+async function refreshLoop() {
     setTimeout(function() { 
 		getUsers()
-        refressLoop();
+        refreshLoop();
     }, config.UPDATE_INTERVAL_ms);
 }
 */
 
 document.addEventListener("DOMContentLoaded", async function () {
-	document.getElementById("adduserbutton").addEventListener("click", addUser);
+	document.getElementById("addUserButton").addEventListener("click", addUser);
     let refresh = document.getElementById("refresh");
     refresh.addEventListener("click", getUsers);
 
 	getUsers();
 	/*
 	if (await getUsers()) {
-		refressLoop();
+		refreshLoop();
 	}
 	*/
 });

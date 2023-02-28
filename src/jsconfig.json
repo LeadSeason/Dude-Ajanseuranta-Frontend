@@ -1,4 +1,4 @@
-// This file gives vscode intelisense
+// This file gives vscode intellisense
 {
   "compilerOptions": {
     "baseUrl": ".",

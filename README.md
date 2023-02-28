@@ -10,9 +10,10 @@ Uses bootstrap 5.3 alpha for style
 - [X] Add are you sure when setting card what is is use
 - [X] Set background to primary-subtle when card is in use
 - [X] Make UserData load per page /api/v1/user/times/${id}
-- [ ] Change colore in user table
+- [ ] Make better name and card name in user week list
+- [ ] Change color in user table
 - [ ] In card rename. rename with enter
-- [ ] Export csv times table (mabe)
+- [ ] Export csv times table (maybe)
 - [ ] idk Some thing on main page
 - [ ] Documentation
 
@@ -55,6 +56,7 @@ frontend
 │   ├── admin
 │   ├── cards
 │   ├── login
+│   ├── user
 │   └── users
 │
 ├── node_modules
@@ -76,6 +78,8 @@ frontend
     │    - Login page
     ├── sass
     │    - sass Style sheets
+    ├── user
+    │    - Detailed time for user status page.
     └── users
-         - Users page
+         - List of users page.
 ```

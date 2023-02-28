@@ -9,6 +9,7 @@
 <body data-bs-theme="dark">
 	<!-- Navbar -->
 	<include src="./src/common/navbar.html"></include>
+
 	<!-- Main Container -->
 	<div class="container d-flex justify-content-center">
 		<div id="textData" class="h1 my-5">Users</div>
@@ -59,7 +60,8 @@
 		</div>
 	</div>
 
-	<!-- Weeks really long because I use col's to create splits -->
+	<!-- Weeks really long because I use col's to create splits
+		 There is probably a better way but this works -->
 	<div class="container-md d-flex justify-content-center pb-5">
 		<div class="row row-cols-6 w-100 vh-75 border">
 			<div class="col col-1 border ">
@@ -167,17 +169,17 @@
 		</div>
 	</div>
 
-
-
+	
 	<div class="conainer d-flex justify-content-center py-2">
 		<div class="d-grid gap-2">
+			<!-- Disabled button because Not implemented -->
 			<button type="button" name="" id="" class="btn btn-primary disabled" data-bs-toggle="tooltip"
 				data-bs-title="Export user data as .csv file."><i class="fa-solid fa-file-export"></i></button>
 		</div>
 	</div>
 
 	<div id="detailedTimeWeek" class="container-md p-2 fs-5">
-
+		<!-- Detailed list of times will be added here -->
 	</div>
 </body>
 
