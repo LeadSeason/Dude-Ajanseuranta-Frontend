@@ -4,18 +4,18 @@ This front end does not require to be ran in node so it can be built
 Uses bootstrap 5.3 alpha for style
 
 ## TODO 
+- [ ] In card rename. rename with enter
+- [ ] Export csv times table (maybe)
+- [ ] Documentation
 - [x] Major refactor
 - [X] Fix Change password
 - [X] Finnish 🇫🇮 Add Adam
 - [X] Add are you sure when setting card what is is use
 - [X] Set background to primary-subtle when card is in use
 - [X] Make UserData load per page /api/v1/user/times/${id}
-- [ ] Make better name and card name in user week list
-- [ ] Change color in user table
-- [ ] In card rename. rename with enter
-- [ ] Export csv times table (maybe)
-- [ ] idk Some thing on main page
-- [ ] Documentation
+- [X] Make better name and card name in user week list
+- [X] Change color in user table
+- [X] idk Some thing on main page
 
 ## Issues
 - Main page on development site has syntax error caused by loading index.js but contains index.html data. 

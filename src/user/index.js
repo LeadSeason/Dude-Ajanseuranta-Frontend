@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     selectedUser = await getUserData();
     // @TODO Make better display
-    addUserName("username: " + selectedUser.name + " Cardname: " + selectedUser.cardname);
+    addUserName(selectedUser.name + "<br>Card: " + selectedUser.cardname);
     updateWeek();
     refreshLoop();
 });
