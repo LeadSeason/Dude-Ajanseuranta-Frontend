@@ -168,18 +168,41 @@ async function updateWeekDisplay() {
     }
 }
 
+async function disableButtons() {
+    document.getElementById("weekBack").disabled = true;
+    document.getElementById("weekForward").disabled = true;
+    document.getElementById("weekRefresh").disabled = true;
+}
+
+async function enableButtons() {
+    document.getElementById("weekBack").disabled = false;
+    document.getElementById("weekForward").disabled = false;
+    document.getElementById("weekRefresh").disabled = false;
+}
+
 async function weekPrev() {
+    await disableButtons();
     selectedWeek--;
-    updateWeekDisplay();
-    updateWeek();
+    await updateWeekDisplay();
+    await updateWeek();
+    await enableButtons();
 }
 
 async function weekNext() {
+    await disableButtons();
     selectedWeek++;
-    updateWeekDisplay();
-    updateWeek();
+    await updateWeekDisplay();
+    await updateWeek();
+    await enableButtons();
 }
 
+
+async function refresh() {
+    await disableButtons();
+    await updateWeekDisplay();
+    await updateWeek();
+    await enableButtons();
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     // Init all tooltips
@@ -189,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add reactive buttons
     document.getElementById("weekBack").addEventListener("click", weekPrev);
     document.getElementById("weekForward").addEventListener("click", weekNext);
-    document.getElementById("weekRefresh").addEventListener("click", updateWeek);
+    document.getElementById("weekRefresh").addEventListener("click", refresh);
 
     document.getElementById("weekDisplay").innerHTML = "Week: " + selectedWeek;
     updateWeek();
