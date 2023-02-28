@@ -15,7 +15,14 @@ import * as config from "/config";
 import { UPDATE_INTERVAL_ms } from '../config';
 
 
-var selectedWeek = dayjs().week()
+const CURENT_URL = new URL(window.location.toLocaleString());
+const URL_PARAMS = CURENT_URL.searchParams;
+var selectedWeek = URL_PARAMS.get("selectedWeek");
+
+if (selectedWeek == null) {
+    selectedWeek = dayjs().week()
+}
+
 var selectedYear = dayjs().year()
 var selectedYearWeeks = dayjs().isoWeeksInYear();
 const currentYear  = dayjs().year()
@@ -113,7 +120,7 @@ async function fillWeekCal(dataArray) {
 }
 
 async function timedetailed(dataArray) {
-    const doc =  document.getElementById("detailedTimeWeek");
+    const doc = document.getElementById("detailedTimeWeek");
     doc.innerHTML = "";
     let currentWeekTimeDoneTime = 0;
 
@@ -135,10 +142,11 @@ async function timedetailed(dataArray) {
 
         // Check if week is currerly selected
         if (begin_time.week() == selectedWeek) {
-            let workdoneNow = (Number(end_time) - Number(begin_time)) / 1000
+            let workdoneNow = (Number(end_time) - Number(begin_time)) / 1000;
+            currentWeekTimeDoneTime += workdoneNow;
 
             let hours = Math.floor(workdoneNow / 3600);
-            let minutes = Math.floor((workdoneNow - hours * 3600) / 60);
+            let minutes = Math.round((workdoneNow - hours * 3600) / 60);
             if (String(minutes).length == 1) {
                 minutes = "0" + String(minutes);
             }
@@ -154,11 +162,18 @@ async function timedetailed(dataArray) {
              ${begin_time.format('ddd HH:mm DD/MM/YYYY')}<br>`;
         }
     }
+
+    let hours = Math.floor(currentWeekTimeDoneTime / 3600);
+    let minutes = Math.round((currentWeekTimeDoneTime - hours * 3600) / 60);
+    // Add 0 to minutes if under 10
+    if (String(minutes).length == 1) {
+        minutes = "0" + String(minutes);
+    }
+    doc.innerHTML = `<i class="alert alert-success fa fa-clock"></i> Current Week Total: ${hours}:${minutes}<br>` + doc.innerHTML
 }
 
 
 async function updateWeek() {
-    document.getElementById("weekDisplay").innerHTML = "Week: " + selectedWeek;
     let data = await makeRequest("GET", config.USER.GET_TIMES_URL + selectedUser.id);
     if (data.status == 200) {
         let parsedData = JSON.parse(data.body);
@@ -218,6 +233,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("weekForward").addEventListener("click", weekNext);
     document.getElementById("weekRefresh").addEventListener("click", updateWeek);
 
+    document.getElementById("weekDisplay").innerHTML = "Week: " + selectedWeek;
     updateWeekDisplay();
 
     selectedUser = await getUserData();
