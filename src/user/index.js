@@ -111,7 +111,7 @@ async function fillWeekCal(dataArray) {
             for (let index2 = 0; index2 < element.timeArray.length; index2++) {
                 const begin_time = element.timeArray[index2][0];
                 const end_time = element.timeArray[index2][1];
-                style += begin_time + "% , rgba(0,212,255,1) " + begin_time + "% " + end_time + "%, rgba(0,0,0,0) " + end_time + "% "
+                style += begin_time + "% , rgba(13,110,253,1) " + begin_time + "% " + end_time + "%, rgba(0,0,0,0) " + end_time + "% "
             }
             style += "100%);"
             element.style = style;
@@ -164,18 +164,28 @@ async function timeDetailed(dataArray) {
                 minutes = "0" + String(minutes);
             }
 
-            doc.innerHTML += `<i class="alert alert-light fa fa-clock"></i> ${hours}:${minutes}<br>`
-
             // use different styling if end time is null
+            let endTimeHTML
             if (inRoom) {
-                doc.innerHTML += `<i class="alert alert-primary fa fa-check"></i> ${end_time.format('ddd HH:mm DD/MM/YYYY')} (NOW)<br>`
+                endTimeHTML = `<i class="alert alert-primary fa fa-check"></i> ${end_time.format('ddd HH:mm DD/MM/YYYY')} (NOW)<br>`
             } else {
-                doc.innerHTML += `<i class="alert alert-danger fa fa-arrow-left"></i> ${end_time.format('ddd HH:mm DD/MM/YYYY')}<br>`
+                endTimeHTML = `<i class="alert alert-danger fa fa-arrow-left"></i> ${end_time.format('ddd HH:mm DD/MM/YYYY')}<br>`
             }
 
             doc.innerHTML += `
-            <i class="alert alert-success fa fa-arrow-right"></i>
-             ${begin_time.format('ddd HH:mm DD/MM/YYYY')}<br>`;
+		<div class="row">
+			<div class="col-lg-2">
+				<i class="alert alert-light fa fa-clock"></i> ${hours}:${minutes}<br>
+			</div>
+			<div class="col-lg">
+				<i class="alert alert-success fa fa-arrow-right"></i>
+                ${begin_time.format('ddd HH:mm DD/MM/YYYY')}<br>
+			</div>
+			<div class="col-lg">
+				${endTimeHTML}
+			</div>
+		</div>
+            `
         }
     }
 
@@ -186,7 +196,9 @@ async function timeDetailed(dataArray) {
         minutes = "0" + String(minutes);
     }
     // Calculate week total and add that to the beginning of the list
-    doc.innerHTML = `<i class="alert alert-success fa fa-clock"></i> Current Week Total: ${hours}:${minutes}<br>` + doc.innerHTML
+    doc.innerHTML = `<i class="alert alert-success fa fa-clock"></i> Current Week Total: ${hours}:${minutes}<br>
+                     <div class="border-top border-2 pb-3"></div>
+                    ` + doc.innerHTML
 }
 
 /**
