@@ -6,22 +6,19 @@ Uses bootstrap 5.3 alpha for style
 ## TODO 
 - [x] Major refactor
 - [X] Fix Change password
-- [/] Finnish 🇫🇮 Add Adam
+- [X] Finnish 🇫🇮 Add Adam
 - [X] Add are you sure when setting card what is is use
 - [X] Set background to primary-subtle when card is in use
 - [X] Make UserData load per page /api/v1/user/times/${id}
 - [ ] Change colore in user table
+- [ ] In card rename. rename with enter
 - [ ] Export csv times table (mabe)
 - [ ] idk Some thing on main page
 - [ ] Documentation
 
-## Ruoka lista
-- [ ] Eggward 🥚
-- [ ] Kinkku siukaleet
-- [ ] Sipuli lastuja
-- [ ] kermaa
-- [ ] Beer 🍺
-- [ ] Bread 🍞
+## Issues
+- Main page on development site has syntax error caused by loading index.js but contains index.html data. 
+
 
 ## Setup
 This project requires npm. Get npm from your favorite package manager.  
