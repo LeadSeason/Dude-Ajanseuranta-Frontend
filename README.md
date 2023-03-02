@@ -1,6 +1,6 @@
 # Dude! AjanSeruanta Frontend
 ## About
-This front end does not require to be ran in node so it can be built
+This front end does not require to be ran in node so it can be built.  
 Uses bootstrap 5.3 alpha for style
 
 ## TODO 
