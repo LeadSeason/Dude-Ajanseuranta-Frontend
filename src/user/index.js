@@ -284,6 +284,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateWeekDisplay();
 
     selectedUser = await getUserData();
+    document.title = "DudeLeimaus | " + selectedUser.name;
     // @TODO Make better display
     addUserName(selectedUser.name + "<br>Card: " + selectedUser.cardname);
     updateWeek();
