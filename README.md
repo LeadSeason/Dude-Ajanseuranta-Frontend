@@ -4,6 +4,8 @@ This front end does not require to be ran in node so it can be built
 Uses bootstrap 5.3 alpha for style
 
 ## TODO 
+- [ ] Have minimum length requirements for names
+- [ ] *CRITICAL* Fix potential xxs exploits. example user's and cards are interpreted as html code and not text
 - [ ] In card rename. rename with enter
 - [ ] Export csv times table (maybe)
 - [ ] Documentation
