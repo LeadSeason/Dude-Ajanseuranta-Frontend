@@ -191,10 +191,10 @@ async function addClickEventForChangeCardDropdown(cards) {
 
 	for (let i = 0; i < cards.length; i++) {
 		var className = "ChangecardDropdown-" + cards[i].cardname;
-		var changeCard = document.getElementsByClassName(className)
-		for (let i = 0; i < changeCard.length; i++) {
+		var changeCardElements = document.getElementsByClassName(className)
+		for (let i = 0; i < changeCardElements.length; i++) {
 			// when cad is pressed change card
-			var card = changeCard[i]
+			var card = changeCardElements[i]
 			card.addEventListener('click', changeCard);
 			card.ActiveCards = activeCards;
 		}
