@@ -3,6 +3,12 @@
 This front end does not require to be ran in node so it can be built.  
 Uses bootstrap 5.3 alpha for style
 
+## Related Projects
+Main:    [ToniLipponen/Dude-Ajanseuranta](https://github.com/ToniLipponen/Dude-Ajanseuranta)  
+Fronend: [LeadSeason/Dude-Ajanseuranta-Frontend](https://github.com/LeadSeason/Dude-Ajanseuranta-Frontend)  
+Backend: [ToniLipponen/Dude-Ajanseuranta-Backend](https://github.com/ToniLipponen/Dude-Ajanseuranta-Backend)  
+Reader:  [LeadSeason/Dude-Ajanseuranta-Reader](https://github.com/LeadSeason/Dude-Ajanseuranta-Reader)
+
 ## TODO 
 - [ ] Have minimum length requirements for names
 - [ ] *CRITICAL* Fix potential xxs exploits. example user's and cards are interpreted as html code and not text
@@ -21,7 +27,6 @@ Uses bootstrap 5.3 alpha for style
 
 ## Issues
 - Main page on development site has syntax error caused by loading index.js but contains index.html data. 
-
 
 ## Setup
 This project requires npm. Get npm from your favorite package manager.  
