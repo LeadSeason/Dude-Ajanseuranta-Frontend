@@ -1,8 +1,4 @@
-// Url of backend in production
-// export const BACKEND_URL = "https://dudeleimaus.xyz/api/v1";
-// Local URL for local development 
-export const BACKEND_URL = "http://192.168.192.12:8082/api/v1";
-// export const BACKEND_URL = "http://localhost:8080";
+export const BACKEND_URL = "http://localhost:8082";
 
 // User paths
 export class USER {
