@@ -111,7 +111,7 @@ async function fillWeekCal(dataArray) {
             for (let index2 = 0; index2 < element.timeArray.length; index2++) {
                 const begin_time = element.timeArray[index2][0];
                 const end_time = element.timeArray[index2][1];
-                style += `${begin_time}% , rgba(0,212,255,1) ${begin_time}% ${end_time}%, rgba(0,0,0,0) ${end_time}%`
+                style += `${begin_time}% , rgba(13,110,253,1) ${begin_time}% ${end_time}%, rgba(0,0,0,0) ${end_time}%`
             }
             style += "100%);"
             element.style = style;
