@@ -1,4 +1,8 @@
 # Dude! AjanSeruanta Frontend
+
+[!NOTE] 
+Archiving this since Dude project has ended some time ago. 
+
 ## About
 This front end does not require to be ran in node so it can be built.  
 Uses bootstrap 5.3 alpha for style
